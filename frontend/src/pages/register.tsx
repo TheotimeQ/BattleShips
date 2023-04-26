@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 
 import styles from "@/styles/Login.module.css";
-import LoginForm from "@/components/LoginForm";
+import RegisterForm from "@/components/RegisterForm";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,7 +11,7 @@ export default function Login() {
     return (
         <>
         <Head>
-            <title>Battleship - Connexion</title>
+            <title>Battleship - Inscription</title>
             <meta
             name="description"
             content="Jeu de bataille navale multijoueur"
@@ -23,7 +23,7 @@ export default function Login() {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={styles.main}>
-            <LoginForm />
+            <RegisterForm />
         </main>
         </>
     );

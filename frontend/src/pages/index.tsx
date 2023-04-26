@@ -1,15 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-} from '@chakra-ui/react';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (
@@ -18,7 +9,7 @@ export default function Home() {
         <title>Battleship</title>
         <meta
           name="description"
-          content="Un jeu de bataille navale"
+          content="Jeu de bataille navale multijoueur"
         />
         <meta
           name="viewport"
@@ -26,8 +17,8 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <h1>Salutations</h1>
+      <main className={styles.main} style={{ textAlign: 'center' }}>
+        <Image src="/images/logo.svg" alt="Battleship" width={200} height={200} />
       </main>
     </>
   );
