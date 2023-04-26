@@ -1,4 +1,7 @@
 from requests import post, get
+import os
+
+os.system("php -S 127.0.0.1:3000 -t " + os.path.dirname(os.path.realpath(__file__)) + "/../backend")
 
 Url_base = "http://127.0.0.1:3000"
 
@@ -103,29 +106,30 @@ Client_1.CreateGame()
 
 print("----------Joining game----------")
 Client_2.JoinGame(Client_1.GameId)
+Client_1.JoinGame(Client_1.GameId)
 
-print("----------Placing Ships----------")
-Client_1.PlaceShip(json_ship_1)
-Client_2.PlaceShip(json_ship_1)
+# print("----------Placing Ships----------")
+# Client_1.PlaceShip(json_ship_1)
+# Client_2.PlaceShip(json_ship_1)
 
-print("----------Shooting----------")
-Client_1.Shoot(0, 0)
-Client_1.Shoot(0, 0)
+# print("----------Shooting----------")
+# Client_1.Shoot(0, 0)
+# Client_1.Shoot(0, 0)
 
-Client_2.Shoot(0, 0)
-Client_2.Shoot(0, 0)
+# Client_2.Shoot(0, 0)
+# Client_2.Shoot(0, 0)
 
-for x in range(10):
-    for y in range(10):
-        Client_1.Shoot(x, y)
-        Client_2.Shoot(x, y) 
+# for x in range(10):
+#     for y in range(10):
+#         Client_1.Shoot(x, y)
+#         Client_2.Shoot(x, y) 
 
-Client_1.Shoot(0, 0)
-Client_2.Shoot(0, 0) 
-Client_1.Shoot(0, 0)
-Client_2.Shoot(0, 0) 
+# Client_1.Shoot(0, 0)
+# Client_2.Shoot(0, 0) 
+# Client_1.Shoot(0, 0)
+# Client_2.Shoot(0, 0) 
         
-Client_1.GetGame()
-Client_2.GetGame()
+# Client_1.GetGame()
+# Client_2.GetGame()
         
 print("---------------------------------------Mauvais test----------------------------------------")
