@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://battleship-backend.test/api/:path*',
+        destination: 'http://battleship-backend.test/api/:path*'
       },
     ]
   }

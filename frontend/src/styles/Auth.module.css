@@ -11,3 +11,9 @@
     
     font-family: 'Inter', sans-serif;
 }
+
+.logo_top {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 40px;
+}

@@ -12,6 +12,9 @@ use controller\AuthController;
 use controller\GameController;
 use controller\MainController;
 
+// Allow CORS
+header('Access-Control-Allow-Origin: *');
+
 Flight::register('db', 'PDO', array('sqlite:db/battleship.db'));
 
 function migrate() {

@@ -1,11 +1,8 @@
 import Head from "next/head";
+import Image from "next/image";
 
-import { Inter } from "next/font/google";
-
-import styles from "@/styles/Login.module.css";
+import styles from "@/styles/Auth.module.css";
 import LoginForm from "@/components/LoginForm";
-
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Login() {
     return (
@@ -23,6 +20,7 @@ export default function Login() {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={styles.main}>
+            <Image src="/images/logo.svg" alt="Battleship" width={200} height={200} className={styles.logo_top} />
             <LoginForm />
         </main>
         </>

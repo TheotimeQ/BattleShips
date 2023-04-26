@@ -1,6 +1,9 @@
+import { headers } from "next/dist/client/components/headers";
+
 class BattleshipService {
 
     private static instance: BattleshipService;
+    
     private token: string | null = null;
 
     constructor(token: string | null = null) {
@@ -8,7 +11,13 @@ class BattleshipService {
             return BattleshipService.instance;
         }
 
-        this.token = token;
+        if (typeof window !== 'undefined') {
+            this.token = token ? token : localStorage.getItem('token');
+        } else {
+            this.token = token;
+        }
+
+
         BattleshipService.instance = this;
     }
 
@@ -16,19 +25,42 @@ class BattleshipService {
         return !!this.token;
     }
 
+    public setToken(token: string) {
+        this.token = token;
+
+        if(typeof window !== 'undefined') {
+            localStorage.setItem('token', token);
+        }
+    }
+
     public async login(username: string, password: string): Promise<any> {
         const response = await fetch('/api/login', {
             method: 'POST',
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
 
         let result = await response.json();
 
         if(result.success) {
-            this.token = result.token;
+            this.setToken(result.token);
         }
 
         return result;
+    }
+
+    public async register(username: string, password: string): Promise<any> {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            body: JSON.stringify({ username, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return response.json();
     }
 
     public async getShips(): Promise<any> {
@@ -60,7 +92,8 @@ class BattleshipService {
             method: 'POST',
             body: JSON.stringify({ id: gameId }),
             headers: {
-                'Authorization': `Bearer ${this.token}`
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
             }
         });
 
@@ -90,7 +123,8 @@ class BattleshipService {
             method: 'POST',
             body: JSON.stringify(ships),
             headers: {
-                'Authorization': `Bearer ${this.token}`
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
             }
         });
 
@@ -106,7 +140,8 @@ class BattleshipService {
             method: 'POST',
             body: JSON.stringify({ x, y }),
             headers: {
-                'Authorization': `Bearer ${this.token}`
+                'Authorization': `Bearer ${this.token}`,
+                'Content-Type': 'application/json'
             }
         });
 
