@@ -67,8 +67,7 @@ class GameController {
 
         \Flight::json(array(
             'success' => true,
-            'message' => 'Game joined',
-            'game' => $game
+            'message' => 'Game joined'
         ));
     }
 

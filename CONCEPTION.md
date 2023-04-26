@@ -1,17 +1,347 @@
 # Conception
 
-Retranscrivez ici le résultat de votre conception de l'API REST.
+- Authentification 
+  - Register
+  - Login
+<br><br>
 
-## Liste des *Endpoints*
+- Action
+  - Tirer
+  - Placer bateau
+<br><br>
+    
+- Game 
+  - Get informations d'une game
+  - Rejoindre une partie
+  - Creer une partie
+<br><br>
 
-Pour chacun, préciser :
-- requête :
-  - URL
-  - méthode HTTP
-  - en-têtes HTTP
-  - paramètres d'URL
-  - corps de message (et son format)
-- réponse :
-  - quelle réponse en fonction des cas ?
-  - code de statut HTTP
-  - corps de message (et son format)
+- Lobby
+  - Get liste des joueurs
+<br><br>
+
+# Liste des *Endpoints*
+<br>
+
+## Authentification
+
+<br>
+
+### `POST /api/register` : registration d'un utilisateur
+
+<br>
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+      "username": "string",
+      "password": "string"
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "Invalid username or password"
+                 "Username or password is empty"
+                 "Username already exists"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Registration successful"
+  }
+  ```
+<br><br>
+
+### `POST /api/login` : Connexion d'un utilisateur
+<br>
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+      "username": "string",
+      "password": "string"
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "Username or password is empty"
+                 "Invalid username or password"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Login successful"
+  }
+  ```
+<br><br>
+
+## Parties
+<br>
+
+### `POST /api/games/create` : création d'une partie
+<br>
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Game created"
+      "game"   : "$game_id" 
+  }
+  ```
+<br><br>
+
+### `POST /api/games/join` : rejoindre une partie
+<br>
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+      "id": "game_id"
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 404
+  {
+      "success": "False",
+      "message": "Game not found"
+  }
+
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+                 "You can't join your own game"
+                 "This game is full"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Game joined"
+  }
+  ```
+<br><br>
+
+### `GET /api/games/:id` : récupération des informations d'une partie
+<br>
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 404
+  {
+      "success": "False",
+      "message": "Game not found"
+  }
+
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+  }
+
+  Code : 200
+  {
+      "game": 
+      {
+          "shots": $all_player_shots
+          "ships": $player ships
+          "state": $state
+          "yourturn": $turn
+      }
+  }
+  ```
+États de la partie :
+- `waiting` : en attente de joueurs
+- `ships_selection` : sélection des bateaux
+- `playing` : en cours de jeu
+- `finished` : partie terminée
+<br><br>
+
+### `POST /api/games/:id/shoot` : tirer sur une case
+<br>
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+      "x": int
+      "y": int
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 404
+  {
+      "success": "False",
+      "message": "Game not found"
+  }
+
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+                  "X and Y must be between 0 and 9"
+                  "X and Y must be numbers"
+                  "You have already shot here"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Shoot successful",
+      "hit": "True / False"
+  }
+  ```
+<br><br>
+
+### `POST /api/games/:id/ships` : sélection des bateaux
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+    "ships": [
+          {
+              "id": 1,
+              "x": 0,
+              "y": 1,
+              "direction": 0
+          },
+          {
+              "id": 2,
+              "x": 0,
+              "y": 2,
+              "direction": 0
+          },
+          {
+              "id": 3,
+              "x": 0,
+              "y": 3,
+              "direction": 0
+          },
+          {
+              "id": 3,
+              "x": 0,
+              "y": 4,
+              "direction": 0
+          },
+          {
+              "id": 4,
+              "x": 0,
+              "y": 5,
+              "direction": 0
+          }
+      ]
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "Ship on ship"
+                 "Invalid ship identifier"
+                 "Invalid "ship_size instead of $ship_size"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Ships placed"
+  }
+  ```
+<br><br>
+
+## Lobby
+
+- `GET /api/users` : récupération de la liste des utilisateurs
