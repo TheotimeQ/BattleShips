@@ -184,9 +184,6 @@
 ### `GET /api/games/:id` : récupération des informations d'une partie
 <br>
 
-
-### `POST /api/games/:id` : recupere infos map
-<br>
 > Requête
 
   ```
@@ -204,7 +201,7 @@
 > Reponse
 
   ```
-  Code : 400
+  Code : 404
   {
       "success": "False",
       "message": "Game not found"
@@ -218,71 +215,133 @@
 
   Code : 200
   {
-      "success": "True",
-      "message": "Game joined"
-      
-                  'success' => true,
-            'data' => array(
-                'state' => $game["state"],
-                'your_turn' => $turn
+      "game": 
+      {
+          "shots": $all_player_shots
+          "ships": $player ships
+          "state": $state
+          "yourturn": $turn
+      }
   }
   ```
-<br><br>
-
-#---------------------------A COMPLETER-----------------------------------------------------
-
-
-### `POST /api/games/:id/shoot` : tirer sur une case
-### `POST /api/games/:id/ships` : sélection des bateaux
-### `GET /api/users` : récupération de la liste des utilisateurs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br><br><br><br><br><br><br><br>
 États de la partie :
 - `waiting` : en attente de joueurs
 - `ships_selection` : sélection des bateaux
 - `playing` : en cours de jeu
 - `finished` : partie terminée
+<br><br>
 
-- `POST /api/games/:id/ships` : sélection des bateaux
+### `POST /api/games/:id/shoot` : tirer sur une case
+<br>
 
-```
-{
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
+      "x": int
+      "y": int
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 404
+  {
+      "success": "False",
+      "message": "Game not found"
+  }
+
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+                  "X and Y must be between 0 and 9"
+                  "X and Y must be numbers"
+                  "You have already shot here"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "Shoot successful",
+      "hit": "True / False"
+  }
+  ```
+<br><br>
+
+### `POST /api/games/:id/ships` : sélection des bateaux
+
+> Requête
+
+  ```
+  Header :
+  {
+      "Cookie": token="token"
+  }
+
+  Body :
+  {
     "ships": [
-        {
-            "x": "int",
-            "y": "int",
-            "direction": "string",
-            "type": "string"
-        }
-    ]
-}
-```
+          {
+              "id": 1,
+              "x": 0,
+              "y": 1,
+              "direction": 0
+          },
+          {
+              "id": 2,
+              "x": 0,
+              "y": 2,
+              "direction": 0
+          },
+          {
+              "id": 3,
+              "x": 0,
+              "y": 3,
+              "direction": 0
+          },
+          {
+              "id": 3,
+              "x": 0,
+              "y": 4,
+              "direction": 0
+          },
+          {
+              "id": 4,
+              "x": 0,
+              "y": 5,
+              "direction": 0
+          }
+      ]
+  }
+  ```
 
-- `POST /api/games/:id/shoot` : tirer sur une case
+> Reponse
 
-```
-{
-    "x": "int",
-    "y": "int"
-}
-```
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "Ship on ship"
+                 "Invalid ship identifier"
+                 "Invalid "ship_size instead of $ship_size"
+  }
 
+  Code : 200
+  {
+      "success": "True",
+      "message": "Ships placed"
+  }
+  ```
+<br><br>
 
 ## Lobby
 
-- `POST /api/games/:id` : recupere infos map
-- `POST /api/games/:id/shoot` : tirer sur une case
 - `GET /api/users` : récupération de la liste des utilisateurs
