@@ -42,7 +42,7 @@ Assisante : non
 
 Obstacle : Debut de react, decouverte des concept pas forcement evident
 Approfondissement : React from scratch ? Npm ? 
-Prochaine seance : Continuer le front-end
+Prochaine seance : Continuer le front-end - ajouter un system de page de pup / de popup / de fenettre de pub sur le coté
 Assisante : non
 
 
