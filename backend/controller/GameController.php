@@ -85,6 +85,10 @@ class GameController {
 
         try {
             $game = \core\Game::get($id);
+
+            if($game["host"] != $currentUser["id"] && $game["opponent"] != $currentUser["id"]) {
+                throw new \Exception("You are not in this game");
+            }
         } catch (\Exception $e) {
             \Flight::json(array(
                 'success' => false,

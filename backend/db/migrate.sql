@@ -72,3 +72,4 @@ INSERT INTO users (username, password) VALUES ('user1', '5e884898da28047151d0e56
 -- On rajoute les bateaux
 
 INSERT INTO ships (name, code, size) VALUES ('Porte-avion', 'aircraft-carrier', 5), ('Croiseur', 'cruiser', 4), ('Contre-torpilleur', 'destroyer', 3), ('Contre-torpilleur', 'destroyer', 3), ('Torpilleur', 'torpedo-boat', 2);
+INSERT INTO games (id, host) VALUES ('test', 1);
