@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "@/styles/Auth.module.css";
 import RegisterForm from "@/components/RegisterForm";
 
-export default function Login() {
+export default function Register() {
     return (
         <>
         <Head>

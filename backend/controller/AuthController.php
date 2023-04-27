@@ -75,23 +75,7 @@ class AuthController {
     }
 
     static function getUsers() {
-        $headers = apache_request_headers();
-        $token = $headers['Authorization'];
-
-        if (!$token) {
-            \Flight::json(array(
-                'success' => false,
-                'message' => 'You are not logged in'
-            ), 400);
-
-            return;
-        }
-
-        if (substr($token, 0, 7) === 'Bearer ') {
-            $token = substr($token, 7);
-        }
-
-        $currentUser = \core\Auth::getUser($token);
+        $currentUser = \core\Auth::getUser(\core\Auth::getToken());
 
         if (!$currentUser) {
             \Flight::json(array(

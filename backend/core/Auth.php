@@ -78,4 +78,18 @@ class Auth {
         return $stmt->fetchAll();
     }
 
+    public static function getToken() {
+        $headers = apache_request_headers();
+        
+        if (!isset($headers['Authorization'])) return false;
+
+        $token = $headers['Authorization'];
+
+        if (substr($token, 0, 7) === 'Bearer ') {
+            $token = substr($token, 7);
+        }
+
+        return $token;
+    }
+
 }

@@ -162,6 +162,20 @@ class BattleshipService {
         return response.json();
     }
 
+    public async getUser(): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/user', {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
 }
 
 export default BattleshipService;
