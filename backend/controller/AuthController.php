@@ -41,12 +41,12 @@ class AuthController {
 
     static function getUser() {
         $headers = apache_request_headers();
-        $token = $headers['Authorization'];
+        $token = $headers['authorization'];
 
         if (!$token) {
             \Flight::json(array(
                 'success' => false,
-                'message' => 'You are not logged in'
+                'message' => 'You are not logged in (no auth header)'
             ), 400);
 
             return;
@@ -61,7 +61,7 @@ class AuthController {
         if (!$currentUser) {
             \Flight::json(array(
                 'success' => false,
-                'message' => 'You are not logged in'
+                'message' => 'You are not logged in (invalid token)'
             ), 400);
 
             return;

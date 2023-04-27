@@ -80,10 +80,8 @@ class Auth {
 
     public static function getToken() {
         $headers = apache_request_headers();
-        
-        if (!isset($headers['Authorization'])) return false;
-
-        $token = $headers['Authorization'];
+        if (!isset($headers['authorization'])) return false;
+        $token = $headers['authorization'];
 
         if (substr($token, 0, 7) === 'Bearer ') {
             $token = substr($token, 7);

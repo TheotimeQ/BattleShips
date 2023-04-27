@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import styles from '@/styles/Game.module.css';
+
+import GameBoard from '@/components/game/GameBoard';
+
 import BattleshipService from '@/services/Battleship.service';
+import GameHeader from '@/components/game/GameHeader';
+import BoatSelector from '@/components/game/BoatSelector';
 
 const service = new BattleshipService();
 
@@ -15,10 +21,8 @@ export default function Game() {
         if(!service.isLoggedIn()) {
             router.push(`/login`);
         }
-        
-        if(!id) return;
 
-        service.getGame("a").then((game) => {
+        service.getGame(id).then((game) => {
             if(game.success) {
                 setGameDetails(game.data);
             } else {
@@ -30,8 +34,15 @@ export default function Game() {
     }
 
     useEffect(() => {
+        if(!id) return;
         updateGameDetails(`${id}`);
     }, [id]);
 
-    return <p>Game {gameDetails}</p>;
+    return (
+        <div className={styles.main}>
+            <GameHeader gameDetails={gameDetails} />
+            <GameBoard gameDetails={gameDetails} />
+            <BoatSelector gameDetails={gameDetails}></BoatSelector>
+        </div>
+    );
 }
