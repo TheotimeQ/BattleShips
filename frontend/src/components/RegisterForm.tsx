@@ -19,7 +19,7 @@ export default function RegisterForm() {
 
         service.register(username, password).then((response) => {
             if(response.success) {
-                window.location.href = '/';
+                router.push(`/`);
             } else {
                 alert(response.message);
             }
