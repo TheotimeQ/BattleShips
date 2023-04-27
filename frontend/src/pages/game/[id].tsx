@@ -20,7 +20,7 @@ export default function Game() {
             if(game.success) {
                 setGameDetails(game.data);
             } else {
-                router.push(`/login`);
+                router.push(`/`);
             }
         }).catch((error) => {
             router.push(`/login`);
