@@ -29,9 +29,10 @@ export default function GameBoard({ gameDetails } : { gameDetails: any }) {
         grid.push(<div className={styles.grid_row}>{row}</div>);
     }
 
-    return (<div>
+    return (<div className={styles.centered_container}>
         <div className={styles.grid_container}>
             {grid}
         </div>
+        { gameDetails.state == "ships_selection" && <BoatSelector gameDetails={gameDetails}></BoatSelector> }
     </div>);
 }

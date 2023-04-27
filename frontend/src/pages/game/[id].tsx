@@ -49,7 +49,6 @@ export default function Game() {
         <div className={styles.main}>
             <GameHeader gameDetails={gameDetails} />
             <GameBoard gameDetails={gameDetails} />
-            <BoatSelector gameDetails={gameDetails}></BoatSelector>
         </div>
     );
 }
