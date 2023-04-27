@@ -43,6 +43,7 @@ Flight::route('POST /api/login', function() { AuthController::login(); });
 Flight::route('POST /api/register', function() { AuthController::register(); });  
 Flight::route('GET /api/user', function() { AuthController::getUser(); });  
 Flight::route('GET /api/users', function() { AuthController::getUsers(); });  
+Flight::route('GET /api/profile/@username', function($username) { AuthController::getProfile($username); });  
 
 // Routes for boats
 Flight::route('GET /api/ships', function() { GameController::getShips(); });  

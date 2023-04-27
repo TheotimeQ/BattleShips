@@ -101,4 +101,39 @@ class AuthController {
         ));
     }
 
+    public static function getProfile($username) {
+        $currentUser = \core\Auth::getUser(\core\Auth::getToken());
+
+        if (!$currentUser) {
+            \Flight::json(array(
+                'success' => false,
+                'message' => 'You are not logged in'
+            ), 400);
+
+            return;
+        }
+
+        $user = \core\Auth::getUserByUsername($username);
+
+        if (!$user) {
+            \Flight::json(array(
+                'success' => false,
+                'message' => 'User not found'
+            ), 400);
+
+            return;
+        }
+
+        $games = \core\Game::getGamesForUser($user["id"]);
+
+        \Flight::json(array(
+            'success' => true,
+            'data' => array(
+                'id' => $user["id"],
+                'username' => $user["username"],
+                'games' => $games
+            )
+        ));
+    }
+
 }

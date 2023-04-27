@@ -406,5 +406,22 @@ class Game {
 
         return $shoots;
     }
+
+    public static function getGamesForUser($user_id) {
+        $db = \Flight::db();
+
+        $stmt = $db->prepare('SELECT * FROM games WHERE host = :player OR opponent = :player');
+        $stmt->execute(array(':player' => $user_id));
+        $games = $stmt->fetchAll();
+
+        $games = array_map(function($game) use ($user_id) {
+            return array(
+                "id" => $game["id"],
+                "won" => $game["winner"] == $user_id
+            );
+        }, $games);
+
+        return $games;
+    }
     
 }
