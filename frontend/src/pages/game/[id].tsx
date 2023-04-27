@@ -48,7 +48,7 @@ export default function Game() {
     return (
         <div className={styles.main}>
             <GameHeader gameDetails={gameDetails} />
-            <GameBoard gameDetails={gameDetails} />
+            <GameBoard id={`${id}`} gameDetails={gameDetails} />
         </div>
     );
 }
