@@ -342,7 +342,100 @@
   ```
 <br><br>
 
-## Lobby
+- `GET /api/games/:id/map` : recupere la maps de la game
+> Requête
+
+  ```
+  headers :
+  {
+      "Authorization": "Bearer $token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+                 "You are not in the game"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "your_map": 
+      {
+          "ships":
+          [
+            {
+                "id": 1,
+                "x": 0,
+                "y": 1,
+                "direction": 0
+                "drown": "true",
+            },
+            {
+                "id": 2,
+                "x": 0,
+                "y": 2,
+                "direction": 0
+                "down": "true",
+            },
+            {
+                "id": 3,
+                "x": 0,
+                "y": 3,
+                "direction": 0
+                "down": "false",
+            },
+            {
+                "id": 3,
+                "x": 0,
+                "y": 4,
+                "direction": 0
+                "down": "false",
+            },
+            {
+                "id": 4,
+                "x": 0,
+                "y": 5,
+                "direction": 0
+                "down": "true",
+            }
+          ]
+      },
+      "shoots":
+        [
+          {
+            "x": 0,
+            "y": 4,
+            "hit": 1,
+            "on_us": "true"
+          }
+          {
+            "x": 0,
+            "y": 4,
+            "hit": 1,
+            "on_us": "false"
+          }
+          {
+            "x": 0,
+            "y": 4,
+            "hit": 0,
+            "on_us": "true"
+          }
+        ]
+  }
+  ```
+<br><br>
+
 - `GET /api/user` : récupération des donées de l'utilisateur actuellement connecté
 > Requête
 
@@ -354,38 +447,7 @@
 
   Body :
   {
-    "ships": [
-          {
-              "id": 1,
-              "x": 0,
-              "y": 1,
-              "direction": 0
-          },
-          {
-              "id": 2,
-              "x": 0,
-              "y": 2,
-              "direction": 0
-          },
-          {
-              "id": 3,
-              "x": 0,
-              "y": 3,
-              "direction": 0
-          },
-          {
-              "id": 3,
-              "x": 0,
-              "y": 4,
-              "direction": 0
-          },
-          {
-              "id": 4,
-              "x": 0,
-              "y": 5,
-              "direction": 0
-          }
-      ]
+  
   }
   ```
 
@@ -439,6 +501,107 @@
             {"id": $id "username": $username}...
             ]
       
+  }
+  ```
+<br><br>
+
+
+## MatchMaking
+- `GET /matchmaking/start` : demare la recherche de matchmaking
+> Requête
+
+  ```
+  headers :
+  {
+      "Authorization": "Bearer $token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+                 "You are already looking for game"
+                 "You are already in game"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "You started looking for game"
+  }
+  ```
+<br><br>
+
+- `GET /matchmaking/update` : regarde si on à trouvé une game
+> Requête
+
+  ```
+  headers :
+  {
+      "Authorization": "Bearer $token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "game_found": "False",
+      "message": "You are not logged in"
+                 "You are not looking for games"
+  }
+
+  Code : 200
+  {
+      "game_found": "True",
+      "game_id": $gameid  
+  }
+  ```
+<br><br>
+
+- `GET /matchmaking/stop` : stop la recherche de matchmaking
+> Requête
+
+  ```
+  headers :
+  {
+      "Authorization": "Bearer $token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "message": "You stopped looking for games"       
   }
   ```
 <br><br>

@@ -94,6 +94,10 @@ class Client:
         response = get(f"{Url_base}/api/users", cookies=self.Cookie, headers=self.Headers)
         print(response.status_code, response.json())
         
+    def GetMap(self):
+        response = get(f"{Url_base}/api/games/{str(self.GameId)}/map", cookies=self.Cookie, headers=self.Headers)
+        print(response.status_code, response.json())
+        
     def __str__(self):
         return f"Client: {self.username}, {self.password}, {self.token}"
     
@@ -115,27 +119,34 @@ Client_1.GetUser()
 Client_1.GetUsers()
 
 # print("----------Creating game----------")
-# Client_1.CreateGame()
+Client_1.CreateGame()
 
 # print("----------Joining game----------")
-# Client_2.JoinGame(Client_1.GameId)
-# Client_1.JoinGame(Client_1.GameId)
+Client_2.JoinGame(Client_1.GameId)
+Client_1.JoinGame(Client_1.GameId)
 
-# print("----------Placing Ships----------")
-# Client_1.PlaceShip(json_ship_1)
-# Client_2.PlaceShip(json_ship_1)
+print("----------Placing Ships----------")
+Client_1.PlaceShip(json_ship_1)
+Client_2.PlaceShip(json_ship_1)
 
 # print("----------Shooting----------")
-# Client_1.Shoot(0, 0)
-# Client_1.Shoot(0, 0)
+Client_1.Shoot(0, 0)
+Client_1.Shoot(0, 0)
 
 # Client_2.Shoot(0, 0)
 # Client_2.Shoot(0, 0)
 
-# for x in range(10):
-#     for y in range(10):
-#         Client_1.Shoot(x, y)
-#         Client_2.Shoot(x, y) 
+for x in range(5):
+    for y in range(5):
+        Client_1.Shoot(x, y)
+        Client_2.Shoot(x, y) 
+        
+Client_1.GetMap()
+
+for x in range(10):
+    for y in range(10):
+        Client_1.Shoot(x, y)
+        Client_2.Shoot(x, y) 
 
 # Client_1.Shoot(0, 0)
 # Client_2.Shoot(0, 0) 

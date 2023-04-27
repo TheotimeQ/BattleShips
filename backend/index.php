@@ -43,6 +43,7 @@ Flight::route('GET /api/ships', function() { GameController::getShips(); });
 Flight::route('POST /api/games/create', function() { GameController::create(); });  
 Flight::route('POST /api/games/join', function() { GameController::join(); });  
 Flight::route('GET /api/games/@id', function($id) { GameController::get($id); });
+Flight::route('GET /api/games/@id/map', function($id) { GameController::getmap($id); });
 
 // Routes for game actions
 Flight::route('POST /api/games/@id/ships', function($id) { GameController::ships($id); });

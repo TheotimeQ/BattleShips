@@ -132,20 +132,42 @@ class Game {
 
         if (count($already) > 0) throw new \Exception('You have already shot here');
 
-        $stmt = $db->prepare('INSERT INTO game_shots (game, player, x, y) VALUES (:game, :player, :x, :y)');
-
+        $stmt = $db->prepare('INSERT INTO game_shots (game, player, x, y, hit) VALUES (:game, :player, :x, :y, :hit)');
+        $hit = self::hitShot($game['id'], $ennemy, $x, $y);
         $stmt->execute(array(
             ':game' => $game['id'],
             ':player' => $ennemy,
             ':x' => $x,
-            ':y' => $y
+            ':y' => $y,
+            ':hit' => $hit
         ));
 
         $nextTurn = $game['host'] == $player['id'] ? 1 : 0;
-
         $hitted = self::checkHit($id, $ennemy, $x, $y);
         self::setTurn($game['id'], $nextTurn);
+
         return $hitted;
+    }
+
+    public static function hitShot($game, $target, $x, $y){
+        $db = \Flight::db();
+        $ships = $db->prepare('SELECT game_ships.id AS id, x, y, direction, size FROM game_ships, ships WHERE game = :game AND player = :player AND game_ships.ship = ships.id');
+        
+        $ships->execute(array(
+            ':game' => $game,
+            ':player' => $target
+        ));
+
+        $ships = $ships->fetchAll();
+        foreach ($ships as $ship) {
+            $positions = self::getPositionsForShip($ship);
+            foreach ($positions as $position) {
+                if ($position['x'] == $x && $position['y'] == $y) {
+                    return 1;
+                }
+            }
+        }
+        return 0;
     }
 
     public static function checkHit($game, $target, $x, $y) {
@@ -329,6 +351,60 @@ class Game {
         $game = $game->fetch();
 
         return $game['state'] == $state;
+    }
+
+    public static function getMapShips($id, $user_id){
+        $db = \Flight::db();
+
+        $stmt = $db->prepare('SELECT * FROM games WHERE id = :id');
+        $stmt->execute(array(':id' => $id));
+        $game = $stmt->fetch();
+
+        if (!$game) throw new \Exception('Game not found', 404);
+
+        $ships = $db->prepare('SELECT * FROM game_ships WHERE game = :game AND player = :player');
+        $ships->execute(array(
+            ':game' => $id,
+            ':player' => $user_id
+        ));
+        $user_ships = $ships->fetchAll();
+
+        $user_ships = array_map(function($ship) {
+            return array(
+                "id" => $ship["id"],
+                "x" => $ship["x"],
+                "y" => $ship["y"],
+                "direction" => $ship["direction"],
+                "down" => $ship["down"]
+            );
+        }, $user_ships);
+
+        return $user_ships;
+    }
+
+    public static function getMapShoots($id, $user_id) {
+        $db = \Flight::db();
+
+        $stmt = $db->prepare('SELECT * FROM games WHERE id = :id');
+        $stmt->execute(array(':id' => $id));
+        $game = $stmt->fetch();
+
+        if (!$game) throw new \Exception('Game not found', 404);
+
+        $shoots = $db->prepare('SELECT * FROM game_shots WHERE game = :game');
+        $shoots->execute(array(':game' => $id));
+        $shoots = $shoots->fetchAll();
+
+        $shoots = array_map(function($shoot) use ($user_id) {
+            return array(
+                "x" => $shoot["x"],
+                "y" => $shoot["y"],
+                "hit" => $shoot["hit"],
+                "on_us" => ($shoot["player"] == $user_id)
+            );
+        }, $shoots);
+
+        return $shoots;
     }
     
 }
