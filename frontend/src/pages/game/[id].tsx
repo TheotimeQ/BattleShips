@@ -20,13 +20,20 @@ export default function Game() {
     const updateGameDetails = (id: string) => {        
         if(!service.isLoggedIn()) {
             router.push(`/login`);
+            return;
         }
 
         service.getGame(id).then((game) => {
             if(game.success) {
                 setGameDetails(game.data);
             } else {
-                router.push(`/`);
+                service.joinGame(id).then((game) => {
+                    if(game.success) {
+                        updateGameDetails(id);
+                    } else {
+                        router.push(`/`);
+                    }
+                });
             }
         }).catch((error) => {
             router.push(`/login`);
