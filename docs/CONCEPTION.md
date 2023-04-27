@@ -34,7 +34,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -71,7 +71,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -110,7 +110,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -145,7 +145,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -187,7 +187,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -237,7 +237,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -281,7 +281,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -347,7 +347,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
@@ -411,7 +411,7 @@
 > Requête
 
   ```
-  Header :
+  headers :
   {
       "Authorization": "Bearer $token"
   }
