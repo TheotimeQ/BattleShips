@@ -22,7 +22,7 @@ class GameController {
     }
 
     static function create() {
-        $currentUser = \core\Auth::getUser(\Flight::request()->cookies->token);
+        $currentUser = \core\Auth::getUser(\core\Auth::getToken());
 
         if (!$currentUser) {
             \Flight::json(array(
@@ -43,7 +43,7 @@ class GameController {
     }
 
     static function join() {
-        $currentUser = \core\Auth::getUser(\Flight::request()->cookies->token);
+        $currentUser = \core\Auth::getUser(\core\Auth::getToken());
 
         if (!$currentUser) {
             \Flight::json(array(
@@ -72,7 +72,7 @@ class GameController {
     }
 
     static function get($id) {
-        $currentUser = \core\Auth::getUser(\Flight::request()->cookies->token);
+        $currentUser = \core\Auth::getUser(\core\Auth::getToken());
 
         if (!$currentUser) {
             \Flight::json(array(
@@ -107,7 +107,7 @@ class GameController {
 
     static function ships($id) {
         if(!self::isAllowedToInteract($id, "ships_selection")) return;
-        $user = \core\Auth::getUser(\Flight::request()->cookies->token);
+        $user = \core\Auth::getUser(\core\Auth::getToken());
 
         try {
             $ships = \Flight::request()->data->ships;
@@ -139,7 +139,7 @@ class GameController {
     static function shoot($id) {
         if(!self::isAllowedToInteract($id, false, "running")) return;
         
-        $user = \core\Auth::getUser(\Flight::request()->cookies->token);
+        $user = \core\Auth::getUser(\core\Auth::getToken());
 
         $x = \Flight::request()->data->x;
         $y = \Flight::request()->data->y;
@@ -163,7 +163,7 @@ class GameController {
     }
 
     static function isAllowedToInteract($gameId, $ignoreTurns = true, $gameState = null) {
-        $user = \core\Auth::getUser(\Flight::request()->cookies->token);
+        $user = \core\Auth::getUser(\core\Auth::getToken());
         $game = \core\Game::get($gameId);
 
         if (!$user) {
