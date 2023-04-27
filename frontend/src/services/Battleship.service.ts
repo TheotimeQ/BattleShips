@@ -176,6 +176,19 @@ class BattleshipService {
         return response.json();
     }
 
+    public async getProfile(username: string): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('http://localhost:1338/api/profile/' + username, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
 }
 
 export default BattleshipService;
