@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import router from 'next/router';
 
 import styles from '@/styles/Form.module.css';
 
@@ -16,7 +17,7 @@ export default function LoginForm() {
 
         service.login(username, password).then((response) => {
             if(response.success) {
-                window.location.href = '/';
+                router.push(`/`);
             } else {
                 alert(response.message);
             }
