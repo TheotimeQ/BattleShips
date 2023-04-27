@@ -218,11 +218,11 @@ class GameController {
     {
         if(!self::isAllowedToInteract($gameId, true, null)) return;
 
-        //try {
+        try {
             $user = \core\Auth::getUser(\core\Auth::getToken());
             $ships = \core\Game::getMapShips($gameId, $user["id"]);
             $shoots = \core\Game::getMapShoots($gameId, $user["id"]);
-        /*} 
+        } 
         catch (\Exception $e) {
             \Flight::json(array(
                 'success' => false,
@@ -230,7 +230,7 @@ class GameController {
             ), 400);
 
             return;
-        }*/
+        }
 
         \Flight::json(array(
             'success' => true,

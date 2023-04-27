@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS "game_shots" (
 
 CREATE TABLE IF NOT EXISTS "matchmaking" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    "player" varchar(255) NOT NULL,
+    "user_id" varchar(255) NOT NULL,
     "last_seen" int NOT NULL,
-    FOREIGN KEY (player) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 

@@ -564,6 +564,7 @@
       "game_found": "False",
       "message": "You are not logged in"
                  "You are not looking for games"
+                 "Waiting for opponent"
   }
 
   Code : 200
@@ -596,6 +597,7 @@
   {
       "success": "False",
       "message": "You are not logged in"
+      "message": "You are not looking for game"
   }
 
   Code : 200

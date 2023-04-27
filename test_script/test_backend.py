@@ -98,6 +98,18 @@ class Client:
         response = get(f"{Url_base}/api/games/{str(self.GameId)}/map", cookies=self.Cookie, headers=self.Headers)
         print(response.status_code, response.json())
         
+    def MatchMakingStart(self):
+        response = get(f"{Url_base}/api/matchmaking/start", cookies=self.Cookie, headers=self.Headers)
+        print(response.status_code, response.json())
+        
+    def MatchMakingUpdate(self):
+        response = get(f"{Url_base}/api/matchmaking/update", cookies=self.Cookie, headers=self.Headers)
+        print(response.status_code, response.json())
+        
+    def MatchMakingStop(self):
+        response = get(f"{Url_base}/api/matchmaking/stop", cookies=self.Cookie, headers=self.Headers)
+        print(response.status_code, response.json())
+        
     def __str__(self):
         return f"Client: {self.username}, {self.password}, {self.token}"
     
@@ -118,35 +130,50 @@ print(Client_2)
 Client_1.GetUser()
 Client_1.GetUsers()
 
+print("----------MatchMaking game----------")
+Client_1.MatchMakingStart()
+# Client_2.MatchMakingStart()
+
+Client_1.MatchMakingStart()
+# Client_2.MatchMakingStart()
+
+Client_1.MatchMakingUpdate()
+
+Client_1.MatchMakingStop()
+Client_1.MatchMakingStop()
+
+# sleep(5)
+# Client_1
+
 # print("----------Creating game----------")
-Client_1.CreateGame()
+# Client_1.CreateGame()
 
 # print("----------Joining game----------")
-Client_2.JoinGame(Client_1.GameId)
-Client_1.JoinGame(Client_1.GameId)
+# Client_2.JoinGame(Client_1.GameId)
+# Client_1.JoinGame(Client_1.GameId)
 
-print("----------Placing Ships----------")
-Client_1.PlaceShip(json_ship_1)
-Client_2.PlaceShip(json_ship_1)
+# print("----------Placing Ships----------")
+# Client_1.PlaceShip(json_ship_1)
+# Client_2.PlaceShip(json_ship_1)
 
 # print("----------Shooting----------")
-Client_1.Shoot(0, 0)
-Client_1.Shoot(0, 0)
+# Client_1.Shoot(0, 0)
+# Client_1.Shoot(0, 0)
 
 # Client_2.Shoot(0, 0)
 # Client_2.Shoot(0, 0)
 
-for x in range(5):
-    for y in range(5):
-        Client_1.Shoot(x, y)
-        Client_2.Shoot(x, y) 
+# for x in range(5):
+#     for y in range(5):
+#         Client_1.Shoot(x, y)
+#         Client_2.Shoot(x, y) 
         
-Client_1.GetMap()
+# Client_1.GetMap()
 
-for x in range(10):
-    for y in range(10):
-        Client_1.Shoot(x, y)
-        Client_2.Shoot(x, y) 
+# for x in range(10):
+#     for y in range(10):
+#         Client_1.Shoot(x, y)
+#         Client_2.Shoot(x, y) 
 
 # Client_1.Shoot(0, 0)
 # Client_2.Shoot(0, 0) 
@@ -156,4 +183,4 @@ for x in range(10):
 # Client_1.GetGame()
 # Client_2.GetGame()
         
-print("---------------------------------------Mauvais test----------------------------------------")
+# print("---------------------------------------Mauvais test----------------------------------------")
