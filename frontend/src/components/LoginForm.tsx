@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 
 import styles from '@/styles/Form.module.css';
 
@@ -8,6 +8,8 @@ import BattleshipService from '@/services/Battleship.service';
 const service = new BattleshipService();
 
 export default function LoginForm() {
+    const router = useRouter();
+
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
