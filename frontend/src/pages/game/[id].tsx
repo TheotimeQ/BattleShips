@@ -11,12 +11,14 @@ export default function Game() {
 
     const [gameDetails, setGameDetails] = useState<any>([]);
 
-    const updateGameDetails = () => {
+    const updateGameDetails = (id: string) => {        
         if(!service.isLoggedIn()) {
             router.push(`/login`);
         }
+        
+        if(!id) return;
 
-        service.getGame(id as string).then((game) => {
+        service.getGame("a").then((game) => {
             if(game.success) {
                 setGameDetails(game.data);
             } else {
@@ -28,8 +30,8 @@ export default function Game() {
     }
 
     useEffect(() => {
-        updateGameDetails();
-    }, []);
+        updateGameDetails(`${id}`);
+    }, [id]);
 
     return <p>Game {gameDetails}</p>;
 }
