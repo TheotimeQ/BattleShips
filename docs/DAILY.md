@@ -47,6 +47,8 @@ Assisante : non
 
 ## Séance 5
 
+Les boss du dev : 
+
 - Correction d'un bug avec la recuperation des donnée apres une requete
 - Ajout d'un endpoint getuser et getusers
 - Ajout endpoints pour le matchmakings ( start | stop | update)
@@ -54,9 +56,16 @@ Assisante : non
 - Creation d'une table des users qui recherche du matchmaking
 - Update de l'apidoc
 
-Obstacle : 
-Approfondissement :
-Prochaine seance : 
-Assisante :
+Les + lents : 
+
+- Avancé du TP front en parallèle avec le professeur 
+- Réalisation du formulaire terminée et fonctionnelle 
+- Arrivée jusqu'à l'implémentation de la méthode GET/POST pour envoyer et enregistrer les coordonées des navires. 
+Or, mes collègues étaient déjà entrain d'implémenter cette fonctionnalité. Donc pour éviter les conflits j'ai commencé à implémenter la page d'historiques des parties et d'affichage du classement des joueurs (qui demande une méthode GET comme la trame du TP le demande) et un espace pour laisser un avis (qui demande une méthode POST comme la trame du TP le demande). 
+
+Obstacle : Compréhension de l'implémentation des méthodes GET et POST 
+Approfondissement : les boss => drag and drop // Les + lents => NONE
+Prochaine seance : Les + lents => Finir le formulaire pour l'historique et le classement 
+Assisante : Probablement 
 
 
