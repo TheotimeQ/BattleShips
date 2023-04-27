@@ -31,16 +31,17 @@ if (!file_exists('db/battleship.db')) {
 Flight::route('/', function() { MainController::index(); });
 
 // Routes for authentication
-Flight::route('POST /api/login', function() { AuthController::login(); }); // Finished
-Flight::route('POST /api/register', function() { AuthController::register(); }); // Finished
-Flight::route('GET /api/users', function() { AuthController::getUsers(); }); // Finished
+Flight::route('POST /api/login', function() { AuthController::login(); });  
+Flight::route('POST /api/register', function() { AuthController::register(); });  
+Flight::route('GET /api/user', function() { AuthController::getUser(); });  
+Flight::route('GET /api/users', function() { AuthController::getUsers(); });  
 
 // Routes for boats
-Flight::route('GET /api/ships', function() { GameController::getShips(); }); // Finished
+Flight::route('GET /api/ships', function() { GameController::getShips(); });  
 
 // Routes for games
-Flight::route('POST /api/games/create', function() { GameController::create(); }); // Finished
-Flight::route('POST /api/games/join', function() { GameController::join(); }); // Finished
+Flight::route('POST /api/games/create', function() { GameController::create(); });  
+Flight::route('POST /api/games/join', function() { GameController::join(); });  
 Flight::route('GET /api/games/@id', function($id) { GameController::get($id); });
 
 // Routes for game actions

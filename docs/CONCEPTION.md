@@ -36,7 +36,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -73,7 +73,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -112,7 +112,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -147,7 +147,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -189,7 +189,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -239,7 +239,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -283,7 +283,7 @@
   ```
   Header :
   {
-      "Cookie": token="token"
+      "Authorization": "Bearer $token"
   }
 
   Body :
@@ -343,5 +343,103 @@
 <br><br>
 
 ## Lobby
+- `GET /api/user` : récupération des donées de l'utilisateur actuellement connecté
+> Requête
+
+  ```
+  Header :
+  {
+      "Authorization": "Bearer $token"
+  }
+
+  Body :
+  {
+    "ships": [
+          {
+              "id": 1,
+              "x": 0,
+              "y": 1,
+              "direction": 0
+          },
+          {
+              "id": 2,
+              "x": 0,
+              "y": 2,
+              "direction": 0
+          },
+          {
+              "id": 3,
+              "x": 0,
+              "y": 3,
+              "direction": 0
+          },
+          {
+              "id": 3,
+              "x": 0,
+              "y": 4,
+              "direction": 0
+          },
+          {
+              "id": 4,
+              "x": 0,
+              "y": 5,
+              "direction": 0
+          }
+      ]
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "Your are not logged in"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "id": $id,
+      "username": $username
+  }
+  ```
+<br><br>
 
 - `GET /api/users` : récupération de la liste des utilisateurs
+> Requête
+
+  ```
+  Header :
+  {
+      "Authorization": "Bearer $token"
+  }
+
+  Body :
+  {
+
+  }
+  ```
+
+> Reponse
+
+  ```
+  Code : 400
+  {
+      "success": "False",
+      "message": "You are not logged in"
+  }
+
+  Code : 200
+  {
+      "success": "True",
+      "Data": [
+            {"id": $id "username": $username},
+            {"id": $id "username": $username}...
+            ]
+      
+  }
+  ```
+<br><br>
+
