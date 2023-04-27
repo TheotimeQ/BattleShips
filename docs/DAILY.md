@@ -45,4 +45,15 @@ Approfondissement : React from scratch ? Npm ?
 Prochaine seance : Continuer le front-end - ajouter un system de page de pup / de popup / de fenettre de pub sur le coté
 Assisante : non
 
+## Séance 5
+
+- Correction d'un bug avec la recuperation des donnée apres une requete
+- Ajout d'un endpoint getuser et getusers
+- Update de l'apidoc
+
+Obstacle : 
+Approfondissement :
+Prochaine seance : 
+Assisante :
+
 
