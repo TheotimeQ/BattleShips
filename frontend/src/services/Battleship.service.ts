@@ -119,9 +119,9 @@ class BattleshipService {
             throw new Error('No token');
         }
 
-        const response = await fetch(`/api/games/${gameId}/place`, {
+        const response = await fetch(`/api/games/${gameId}/ships`, {
             method: 'POST',
-            body: JSON.stringify(ships),
+            body: JSON.stringify({ships}),
             headers: {
                 'Authorization': `Bearer ${this.token}`,
                 'Content-Type': 'application/json'
