@@ -1,9 +1,9 @@
 from requests import post, get
 import os
 
-os.system("php -S 127.0.0.1:3000 -t " + os.path.dirname(os.path.realpath(__file__)) + "/../backend")
+# os.system("php -S 127.0.0.1:3000 -t " + os.path.dirname(os.path.realpath(__file__)) + "/../backend")
 
-Url_base = "http://127.0.0.1:3000"
+Url_base = "http://127.0.0.1:8080"
 
 json_ship_1 = {
         "ships": [
@@ -84,6 +84,14 @@ class Client:
         response = get(f"{Url_base}/api/games/{str(self.GameId)}", cookies=self.Cookie)
         print(response.status_code, response.json())
         
+    def GetUser(self):
+        response = get(f"{Url_base}/api/user", cookies=self.Cookie)
+        print(response.status_code, response.json())
+        
+    def GetUsers(self):
+        response = get(f"{Url_base}/api/users", cookies=self.Cookie)
+        print(response.status_code, response.json())
+        
     def __str__(self):
         return f"Client: {self.username}, {self.password}, {self.token}"
     
@@ -101,12 +109,15 @@ Client_2.Register()
 Client_2.Login()
 print(Client_2)
 
-print("----------Creating game----------")
-Client_1.CreateGame()
+Client_1.GetUser()
+Client_1.GetUsers()
 
-print("----------Joining game----------")
-Client_2.JoinGame(Client_1.GameId)
-Client_1.JoinGame(Client_1.GameId)
+# print("----------Creating game----------")
+# Client_1.CreateGame()
+
+# print("----------Joining game----------")
+# Client_2.JoinGame(Client_1.GameId)
+# Client_1.JoinGame(Client_1.GameId)
 
 # print("----------Placing Ships----------")
 # Client_1.PlaceShip(json_ship_1)
