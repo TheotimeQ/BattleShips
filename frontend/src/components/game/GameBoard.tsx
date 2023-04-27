@@ -12,6 +12,7 @@ export default function GameBoard({ id, gameDetails } : { id: string, gameDetail
     const [ships, setShips] = useState<any>([]);
     const [selectedShip, setSelectedShip] = useState<any>(null);
     const [usedPositions, setUsedPositions] = useState<any>([]);
+    const [currentGrid, setCurrentGrid] = useState<any>([]);
 
     const onShipSelection = (ship: any) => {
         setSelectedShip(ship);
@@ -80,42 +81,50 @@ export default function GameBoard({ id, gameDetails } : { id: string, gameDetail
 
             setUsedPositions([...usedPositions, ...positions]);
             setShips([...ships, ship]);
-            
+
             setSelectedShip(null);
         }
     }
 
-    let grid = [];
+    const getGrid = () => {
+        let grid = [];
 
-    for(let i = 0; i < 11; i++) {
-        let row = [];
-        for(let j = 0; j < 11; j++) {
-            let content = '';
-            let style = styles.grid_cell;
-            let clickEvent = () => {};
-
-            if (i == 0 && j > 0) {
-                content = j.toString();
-                style = styles.grid_cell_indicator;
-            } else if (j == 0 && i > 0) {
-                content = String.fromCharCode(64 + i);
-                style = styles.grid_cell_indicator;
-            } else if (i == 0 && j == 0) {
-                content = '';
-                style = styles.grid_cell_indicator;
-            } else {
-                clickEvent = () => onGridClick(j, i);
+        for(let i = 0; i < 11; i++) {
+            let row = [];
+            for(let j = 0; j < 11; j++) {
+                let content = '';
+                let style = styles.grid_cell;
+                let clickEvent = () => {};
+    
+                if (i == 0 && j > 0) {
+                    content = j.toString();
+                    style = styles.grid_cell_indicator;
+                } else if (j == 0 && i > 0) {
+                    content = String.fromCharCode(64 + i);
+                    style = styles.grid_cell_indicator;
+                } else if (i == 0 && j == 0) {
+                    content = '';
+                    style = styles.grid_cell_indicator;
+                } else {
+                    clickEvent = () => onGridClick(j, i);
+                }
+    
+                row.push(<div className={style} onClick={clickEvent}>{content}</div>);
             }
-
-            row.push(<div className={style} onClick={clickEvent}>{content}</div>);
+    
+            grid.push(<div className={styles.grid_row}>{row}</div>);
         }
 
-        grid.push(<div className={styles.grid_row}>{row}</div>);
+        return grid;
     }
+
+    useEffect(() => {
+        setCurrentGrid(getGrid());
+    }, [ships, selectedShip, usedPositions]);
 
     return (<div className={styles.centered_container}>
         <div className={styles.grid_container}>
-            {grid}
+            {currentGrid}
         </div>
         { gameDetails.state == "ships_selection" && <BoatSelector gameDetails={gameDetails} placedShips={ships.map((s: any) => s.id)} onShipSelection={onShipSelection} onFinished={onFinished}></BoatSelector> }
     </div>);
