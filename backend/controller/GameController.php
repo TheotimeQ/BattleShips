@@ -214,4 +214,29 @@ class GameController {
         return true;
     }
 
+    static function getmap($gameId)
+    {
+        if(!self::isAllowedToInteract($gameId, true, null)) return;
+
+        try {
+            $user = \core\Auth::getUser(\core\Auth::getToken());
+            $ships = \core\Game::getMapShips($gameId, $user["id"]);
+            $shoots = \core\Game::getMapShoots($gameId, $user["id"]);
+        } 
+        catch (\Exception $e) {
+            \Flight::json(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ), 400);
+
+            return;
+        }
+
+        \Flight::json(array(
+            'success' => true,
+            'ships' => $ships,
+            'shoots' => $shoots
+        ));
+    }
+
 }

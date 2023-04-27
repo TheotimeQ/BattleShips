@@ -49,6 +49,9 @@ Assisante : non
 
 - Correction d'un bug avec la recuperation des donnée apres une requete
 - Ajout d'un endpoint getuser et getusers
+- Ajout endpoints pour le matchmakings ( start | stop | update)
+- Ajout endpoint pour recuperer la map
+- Creation d'une table des users qui recherche du matchmaking
 - Update de l'apidoc
 
 Obstacle : 
