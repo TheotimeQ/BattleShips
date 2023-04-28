@@ -40,7 +40,7 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
         for(let i = 0; i < positions.length; i++) {
             let position = positions[i];
 
-            if(position.x < 1 || position.x > 10 || position.y < 1 || position.y > 10) {
+            if(position.x < 0 || position.x > 9 || position.y < 0 || position.y > 9) {
                 return false;
             }
 
@@ -111,10 +111,10 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
                     content = '';
                     style = styles.grid_cell_indicator;
                 } else {
-                    clickEvent = () => onGridClick(j, i);
+                    clickEvent = () => onGridClick(j - 1, i - 1);
                 }
 
-                if(usedPositions.find((p: any) => p.x == j && p.y == i)) {
+                if(usedPositions.find((p: any) => p.x == (j-1) && p.y == (i-1))) {
                     style = `${style} ${styles.grid_cell_used}`
                 }
     
