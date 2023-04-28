@@ -15,14 +15,14 @@ class MatchmakingController {
             return;
         }
 
-        if (\core\Match::isUserMatchmaking($currentUser['id'])) {
-            \Flight::json(array(
-                'success' => false,
-                'message' => 'You are already looking for game'
-            ), 400);
+        // if (\core\Match::isUserMatchmaking($currentUser['id'])) {
+        //     \Flight::json(array(
+        //         'success' => false,
+        //         'message' => 'You are already looking for game'
+        //     ), 400);
 
-            return;
-        }
+        //     return;
+        // }
 
         if (\core\Match::isAlreadyInGame($currentUser['id'])) {
             \Flight::json(array(
@@ -84,7 +84,7 @@ class MatchmakingController {
         
         \Flight::json(array(
             'success' => true,
-            'game_id' => $game_id
+            'message' => $game_id
         ));
     }
 

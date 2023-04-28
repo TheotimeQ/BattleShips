@@ -67,10 +67,9 @@ class Match {
 
         $user_match = $db->prepare('DELETE FROM matchmaking WHERE last_seen < :last_seen');
         $user_match->execute(array(
-            ':last_seen' => time() - (2 * 10000) //CHIFFRE A MODIFIER
+            ':last_seen' => time() - 10
         ));
         
-        //Si deja dans une game , renvoi l'id de la game
         $game = $db->prepare('SELECT * FROM games WHERE host = :user_id OR opponent = :oponent_id');
         $game->execute(array(
             ':user_id' => $user_id,
@@ -86,7 +85,6 @@ class Match {
             return $game['id'];
         }
 
-        //Choisi un opponent et creer la game si pas deja dans une game
         $opponent = $db->prepare('SELECT * FROM matchmaking WHERE user_id != :user_id ORDER BY last_seen ASC LIMIT 1');
         $opponent->execute(array(
             ':user_id' => $user_id,

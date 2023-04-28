@@ -176,6 +176,62 @@ class BattleshipService {
         return response.json();
     }
 
+    public async matchmakeStart(): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/matchmaking/start', {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
+    public async matchmakeUpdate(): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/matchmaking/update', {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
+    public async matchmakeStop(): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/matchmaking/stop', {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
+    public async getProfile(username: string): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/profile/' + username, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
 }
 
 export default BattleshipService;

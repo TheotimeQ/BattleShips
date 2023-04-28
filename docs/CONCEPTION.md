@@ -597,7 +597,7 @@
   {
       "success": "False",
       "message": "You are not logged in"
-      "message": "You are not looking for game"
+                 "You are not looking for game"
   }
 
   Code : 200
