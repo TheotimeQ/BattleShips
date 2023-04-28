@@ -176,20 +176,12 @@ class BattleshipService {
         return response.json();
     }
 
-<<<<<<< HEAD
     public async matchmakeStart(): Promise<any> {
-=======
-    public async getProfile(username: string): Promise<any> {
->>>>>>> refs/remotes/origin/master
         if (!this.token) {
             throw new Error('No token');
         }
 
-<<<<<<< HEAD
         const response = await fetch('/api/matchmaking/start', {
-=======
-        const response = await fetch('http://localhost:1338/api/profile/' + username, {
->>>>>>> refs/remotes/origin/master
             headers: {
                 'Authorization': `Bearer ${this.token}`
             }
@@ -197,7 +189,6 @@ class BattleshipService {
 
         return response.json();
     }
-<<<<<<< HEAD
 
     public async matchmakeUpdate(): Promise<any> {
         if (!this.token) {
@@ -227,8 +218,20 @@ class BattleshipService {
         return response.json();
     }
 
-=======
->>>>>>> refs/remotes/origin/master
+    public async getProfile(username: string): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/profile/' + username, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
 }
 
 export default BattleshipService;
