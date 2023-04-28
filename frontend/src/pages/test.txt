@@ -1,0 +1,50 @@
+    const updateMatchmaking = async () => { 
+
+        if (!searchingRef.current) {
+            return ;
+        }
+
+        const response = await service.matchmakeUpdate();
+        if(response.success) {
+            stopMatchmaking();
+            router.push(`/game/${response.game_id}`);
+            return ;
+        } 
+        else {
+            if (response.message == "Waiting for opponent") {
+                setTimeout(() => {  updateMatchmaking(); }, 5000);
+            } else {
+                setError(response.message);
+                stopMatchmaking();
+            }
+        }
+    }
+
+    const stopMatchmaking = async() => {
+
+        const response = await service.matchmakeStop();
+        if(response.success) {
+            setSearching(false);
+            searchingRef.current = false;
+        } else {
+            setError(response.message);
+        }
+    }
+
+    const startMatchmaking = async () => {
+
+        if (!loggedIn) {
+            router.push('/login');searching
+            return;
+        }
+
+        const response = await service.matchmakeStart();
+        if(response.success) {
+            setSearching(true);
+            searchingRef.current = true;
+            updateMatchmaking();
+        } else {
+            setSearching(false);
+            setError(response.message);
+        }
+    }

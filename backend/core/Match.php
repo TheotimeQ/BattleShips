@@ -18,10 +18,10 @@ class Match {
         return false;
     }
 
-    static function isAlreadyInGame($user) {
+    static function isAlreadyInGame($user_id) {
         $db = \Flight::db();
         try {
-            $user = $db->prepare("SELECT * FROM games WHERE host = :user_id OR opponent_id = :user_id");
+            $user = $db->prepare("SELECT * FROM games WHERE host = :user_id OR opponent = :user_id");
             $user->execute(array(':user_id' => $user_id));
             $user = $user->fetchAll();
             if (sizeof($user) > 0)
@@ -43,14 +43,15 @@ class Match {
     }
 
     static function createGame($user_id, $opponent_id) {
+
         $db = \Flight::db();
         $uuid = \Ramsey\Uuid\Uuid::uuid4();
-
-        $db->prepare('INSERT INTO games (id, host, opponent) VALUES (:id, :host, :opponent)')
+        $db->prepare('INSERT INTO games (id, host, opponent, state) VALUES (:id, :host, :opponent, :state)')
             ->execute(array(
                 ':id' => $uuid,
                 ':host' => $user_id,
-                ':opponent' => $opponent_id
+                ':opponent' => $opponent_id,
+                ':state' => 'ships_selection'
             ));
 
         return $uuid;

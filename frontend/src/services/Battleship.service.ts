@@ -100,6 +100,20 @@ class BattleshipService {
         return response.json();
     }
 
+    public async getGameMap(gameId: string): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch(`/api/games/${gameId}/map`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
     public async getGame(gameId: string): Promise<any> {
         if (!this.token) {
             throw new Error('No token');
@@ -182,6 +196,20 @@ class BattleshipService {
         }
 
         const response = await fetch('/api/matchmaking/start', {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
+    public async isingame(): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/matchmaking/isingame', {
             headers: {
                 'Authorization': `Bearer ${this.token}`
             }
