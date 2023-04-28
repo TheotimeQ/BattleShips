@@ -45,15 +45,15 @@ export default function Profile() {
         </div>
         <div className={styles.scores}>
             <div className={styles.score}>
-                <p className={styles.score_number} >16</p>
+                <p className={styles.score_number} >{profile.games?.filter((game: any) => game.won).length}</p>
                 <p className={styles.score_details}>Gagnées</p>
             </div>
             <div className={styles.score}>
-                <p className={styles.score_number} >16</p>
+                <p className={styles.score_number} >{profile.games?.filter((game: any) => !game.won).length}</p>
                 <p className={styles.score_details}>Perdues</p>
             </div>
             <div className={styles.score}>
-                <p className={styles.score_number} >16</p>
+                <p className={styles.score_number} >{profile.games?.length}</p>
                 <p className={styles.score_details}>Jouées</p>
             </div>
         </div>
