@@ -34,25 +34,21 @@
     background: #f2f2f2;
 }
 
-
-
-
 .home_button {
     display: flex;
     width: 300px;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
     border-radius: 5px;
     background: #ffffff;
     transition: 0.1s ease-in-out;
-    padding-bottom: 20px;
+    padding: 20px;
+    border: 3px solid transparent;
 }
 
 .home_button img {
-    margin: 20px;
-    height: 100px;
+    height: 50px;
     width: auto;
+    margin-bottom: 20px;
 }
 
 .home_button p {
@@ -60,7 +56,6 @@
     font-weight: 600;
     color: #000000;
     margin: 0;
-    padding: 5px 10px;
 }
 
 .home_button:hover {
@@ -68,6 +63,7 @@
     transform: scale(1.1);
     cursor: pointer;
     z-index: 1;
+    border: 3px solid #FFC71F;
 }
 
 .button_box {
@@ -85,18 +81,20 @@
     border-radius: 5px;
     background: #ffffff;
     transition: 0.1s ease-in-out;
-    width: 700px;
-    height: 400px;
+    width: 400px;
+    height: 300px;
+    z-index: 1;
+    border: 3px solid #FFC71F;
 }
 
 .search_box img {
     margin: 20px;
-    height: 150px;
+    height: 50px;
     width: auto;
 }
 
 .search_box p {
-    font-size: 1.5rem;
+    font-size: 15px;
     font-weight: 600;
     color: #000000;
     margin: 0;
@@ -104,20 +102,54 @@
     animation: notification 3s infinite;
 }
 
-.stop_button{
-    border-radius: 5px;
-    width: 100%;
-    background-color: rgb(212, 211, 211);
-    font-size: 1.5rem;
+.search_box h2 {
+    font-size: 20px;
     font-weight: 600;
     color: #000000;
     margin: 0;
-    padding: 20px;
+}
+
+.stop_button{
+    border-radius: 5px;
+    background-color: #ececec;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    transition-duration: 0.3s;
+    border: 3px solid transparent;
 }
 
 .stop_button:hover{
-    background-color: rgb(252, 58, 87);
-    transition-duration: 0.3s;
+    border: 3px solid #ff1f1f;
+}
+
+.player {
+    background: #ffffff;
+    position: absolute;
+    display: flex;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.player img {
+    height: 20px;
+    width: auto;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.player_name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    margin: 0;
+    line-height: 20px;
 }
 
 @keyframes notification {

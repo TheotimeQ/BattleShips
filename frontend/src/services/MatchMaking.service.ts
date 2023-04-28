@@ -49,15 +49,16 @@ class MatchMakingService {
     }
 
     public stop = async() => {
-
         if (!this.isInitialized()) { 
             console.log("MatchMakingService not initialized");
             return ; 
         }
 
         const response = await this.service.matchmakeStop();
+
         if(response.success) {
             this.searching = false;
+            this.setMessage!("");
         } else {
             this.setMessage!(response.message);
         }

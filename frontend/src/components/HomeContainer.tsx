@@ -5,19 +5,30 @@ import Image from 'next/image';
 
 import styles from '@/styles/Home.module.css';
 
+import BattleshipService from '@/services/Battleship.service';
 import matchmakingService from '@/services/MatchMaking.service';
 
 import HomeButton from './buttons/HomeButton';
 import SearchBox from './buttons/SearchBox';
 import ErrorBox from './utils/ErrorBox';
 
-export default function HomeContainer() {
+const service = new BattleshipService();
 
+export default function HomeContainer() {
     const {push} = useRouter();
 
     const [searching, setSearching] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const [ingame, setInGame] = useState<boolean>(false);
+    const [currentPlayer, setCurrentPlayer] = useState<string>("");
+
+    const getCurrentPlayer = async () => {
+        service.getUser().then((response) => {
+            if(response.success) {
+                setCurrentPlayer(response.username);
+            }
+        });
+    }
 
     useEffect(() => {
         matchmakingService.initialize(setMessage, push);
@@ -26,7 +37,10 @@ export default function HomeContainer() {
             const currentlyInGame = await matchmakingService.isInGame();
             setInGame(currentlyInGame);
         }
-        checkInGame()
+
+        checkInGame();
+
+        getCurrentPlayer();
     }, []);
 
     useEffect(() => {
@@ -48,8 +62,12 @@ export default function HomeContainer() {
                 { !ingame && <HomeButton text="Matchmaking" onClick={matchmakingService.start} img="join"/>}
                 { ingame && <HomeButton text="Reprendre la partie" onClick={matchmakingService.start} img="bataille"/>}
             </div>
+            { currentPlayer && <div className={styles.player}>
+                <Image src="/images/player.png" alt="player" width={50} height={50} />
+                <p className={styles.player_name}>{currentPlayer}</p>    
+            </div>}
             { searching && <SearchBox funct={(matchmakingService.stop)} />}
-            { message != "" && <ErrorBox text={message}/>}
+            { message != "" && <ErrorBox text={message}/> }
         </div>
     );
 }
