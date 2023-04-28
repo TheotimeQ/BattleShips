@@ -46,11 +46,12 @@ class Match {
         $db = \Flight::db();
         $uuid = \Ramsey\Uuid\Uuid::uuid4();
 
-        $db->prepare('INSERT INTO games (id, host, opponent) VALUES (:id, :host, :opponent)')
+        $db->prepare('INSERT INTO games (id, host, opponent, state) VALUES (:id, :host, :opponent, :state)')
             ->execute(array(
                 ':id' => $uuid,
                 ':host' => $user_id,
-                ':opponent' => $opponent_id
+                ':opponent' => $opponent_id,
+                ':state' => 'ships_selection'
             ));
 
         return $uuid;

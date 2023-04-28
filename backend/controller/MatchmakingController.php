@@ -15,24 +15,6 @@ class MatchmakingController {
             return;
         }
 
-        // if (\core\Match::isUserMatchmaking($currentUser['id'])) {
-        //     \Flight::json(array(
-        //         'success' => false,
-        //         'message' => 'You are already looking for game'
-        //     ), 400);
-
-        //     return;
-        // }
-
-        if (\core\Match::isAlreadyInGame($currentUser['id'])) {
-            \Flight::json(array(
-                'success' => false,
-                'message' => 'You are already in game'
-            ), 400);
-
-            return;
-        }
-
         try {
             \core\Match::start($currentUser['id']);
         } catch (\Exception $e) {
@@ -62,15 +44,6 @@ class MatchmakingController {
             return;
         }
 
-        if (!\core\Match::isUserMatchmaking($currentUser['id'])) {
-            \Flight::json(array(
-                'success' => false,
-                'message' => 'You are not looking for game'
-            ), 400);
-
-            return;
-        }
-
         try {
             $game_id = \core\Match::update($currentUser['id']);
         } catch (\Exception $e) {
@@ -81,10 +54,19 @@ class MatchmakingController {
 
             return;
         }
+
+        if (!$game_id) {
+            \Flight::json(array(
+                'success' => false,
+                'message' => 'Something went wrong'
+            ), 400);
+
+            return;
+        }
         
         \Flight::json(array(
             'success' => true,
-            'message' => $game_id
+            'game_id' => $game_id
         ));
     }
 
@@ -100,14 +82,14 @@ class MatchmakingController {
             return;
         }
 
-        if (!\core\Match::isUserMatchmaking($currentUser['id'])) {
-            \Flight::json(array(
-                'success' => false,
-                'message' => 'You are not looking for game'
-            ), 400);
+        // if (!\core\Match::isUserMatchmaking($currentUser['id'])) {
+        //     \Flight::json(array(
+        //         'success' => false,
+        //         'message' => 'You are not looking for game'
+        //     ), 400);
 
-            return;
-        }
+        //     return;
+        // }
 
         try {
             \core\Match::stop($currentUser['id']);

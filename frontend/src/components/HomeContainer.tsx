@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 import Image from 'next/image';
@@ -17,80 +17,75 @@ export default function HomeContainer() {
     const router = useRouter();
     const loggedIn = service.isLoggedIn();
     const [error, setError] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
     const [searching, setSearching] = useState<boolean>(false);
-    const [intervalId, setIntervalId] = useState<any>(null);
+    const searchingRef = useRef(false);
 
-    const updateMatchmaking = () => {
-        service.matchmakeUpdate().then((response) => {
+    const updateMatchmaking = async () => { 
+
+        if (!searchingRef.current) {
+            return ;
+        }
+
+        const response = await service.matchmakeUpdate();
+        if(response.success) {
+            stopMatchmaking();
+            router.push(`/game/${response.game_id}`);
+            return ;
+        } 
+        else {
+            if (response.message == "Waiting for opponent") {
+                setTimeout(() => {  updateMatchmaking(); }, 1000);
+            } else {
+                setError(response.message);
+                stopMatchmaking();
+            }
+        }
+    }
+
+    const stopMatchmaking = async() => {
+
+        const response = await service.matchmakeStop();
+        if(response.success) {
+            setSearching(false);
+            searchingRef.current = false;
+        } else {
             setError(response.message);
-            if(response.success) {
-                setSearching(false);
-                clearInterval(intervalId);
-                router.push(`/game/${response.message}`);
-                return ;
-            } else {
-                if (response.message = "Waiting for opponent"){
-                    
-                }
-                else {
-                    setError(response.message);
-                    setSearching(false);
-                    clearInterval(intervalId);
-                }
-            }
-        });
+        }
     }
 
-    const stopMatchmaking = () => {
-        service.matchmakeStop().then((response) => {
-            if(response.success) {
-                setSearching(false);
-                clearInterval(intervalId);
-            } else {
-                setError(response.message);
-            }
-        });
+    const startMatchmaking = async () => {
+
+        if (!loggedIn) {
+            router.push('/login');searching
+            return;
+        }
+
+        const response = await service.matchmakeStart();
+        if(response.success) {
+            setSearching(true);
+            searchingRef.current = true;
+            updateMatchmaking();
+        } else {
+            setSearching(false);
+            setError(response.message);
+        }
     }
 
-    const startMatchmaking = () => {
+    const createGame = async() => {
+
         if (!loggedIn) {
             router.push('/login');
             return;
         }
-
-        setLoading(true);
-        service.matchmakeStart().then((response) => {
-            if(response.success) {
-                setSearching(true);
-                const id = setInterval(updateMatchmaking, 1000);
-                setIntervalId(id);
-            } else {
-                setError(response.message);
-            }
-        }).finally(() => {
-            setLoading(false);
-        });
-    }
-
-    const createGame = () => {
-        if (!loggedIn) {
-            router.push('/login');
-            return;
+        
+        const response = await service.createGame();   
+        if(response.success) {
+            router.push(`/game/${response.game}`);
+        } else {
+            setError(response.message);
         }
-
-        setLoading(true);
-        service.createGame().then((response) => {            
-            if(response.success) {
-                router.push(`/game/${response.game}`);
-            } else {
-                alert(response.message);
-            }
-        }).finally(() => {
-            setLoading(false);
-        });
     }
-    
+
     return (
         <div className={styles.main} style={{ textAlign: 'center' }}>
             <Image src="/images/logo.svg" alt="Battleship" width={400} height={400} style={{
@@ -98,10 +93,10 @@ export default function HomeContainer() {
             }}/>
 
             <div className={styles.button_box}>
-                <HomeButton text="Créer une partie" onClick={(createGame)} img="bataille" disabled={loading} />
-                <HomeButton text="Rejoindre une partie" onClick={(startMatchmaking)} img="join" disabled={loading} />
+                <HomeButton text="Créer une partie" onClick={(createGame)} img="bataille"/>
+                <HomeButton text="Rejoindre une partie" onClick={(startMatchmaking)} img="join"/>
             </div>
-            { searching && <SearchBox funct={(stopMatchmaking)}/>}
+            { searching && <SearchBox funct={(stopMatchmaking)} />}
             { error != "" && <ErrorBox text={error}/>}
         </div>
     );

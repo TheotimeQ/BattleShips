@@ -76,27 +76,42 @@
     gap: 20px;
 }
 
-/* .home_button {
-    background: #ffffff;
-    padding: 5px 20px;
-    border: 2px solid #d7d8da;
-    font-size: 14px;
-    aspect-ratio: 1;
-    width: 300px;
-    border-radius: 15px ;
-    font-size: 1.5rem;
-}
-
-.home_button:hover {
-    background: #f2f2f2;
-} */
-
 .search_box {
-    position: absolute;
-    background-color: green;
-    border-radius: 12px;
+    position: absolute;    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 5px;
+    background: #ffffff;
+    transition: 0.1s ease-in-out;
     width: 700px;
     height: 400px;
+}
+
+.search_box img {
+    margin: 20px;
+    height: 150px;
+    width: auto;
+}
+
+.search_box p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+    padding: 20px;
+}
+
+.stop_button{
+    background-color: #ffffff;
+    border: solid black 1px;
+}
+
+.stop_button:hover{
+    background-color: rgb(63, 86, 157);
+    border: solid black 1px;
+    transition-duration: 0.3s;
 }
 
   
