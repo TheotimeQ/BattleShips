@@ -16,7 +16,8 @@ export default function Game() {
     const { id } = router.query;
 
     const [gameDetails, setGameDetails] = useState<any>([]);
-
+    const [gameMap, setGameMap] = useState<any>([]);
+    
     const updateGameDetails = (id: string) => {        
         if(!service.isLoggedIn()) {
             router.push(`/login`);
@@ -26,6 +27,18 @@ export default function Game() {
         service.getGame(id).then((game) => {
             if(game.success) {
                 setGameDetails(game.data);
+
+                service.getGameMap(id).then((map) => {
+                    if(map.success) {
+                        setGameMap(map);
+
+                        setTimeout(() => {
+                            updateGameDetails(id);
+                        }, 1000);
+                    } else {
+                        alert("Error getting game map: " + map.message);
+                    }
+                });
             } else {
                 service.joinGame(id).then((game) => {
                     if(game.success) {
@@ -48,7 +61,7 @@ export default function Game() {
     return (
         <div className={styles.main}>
             <GameHeader gameDetails={gameDetails} />
-            <GameBoard id={`${id}`} gameDetails={gameDetails} />
+            <GameBoard id={`${id}`} gameDetails={gameDetails} gameMap={gameMap} />
         </div>
     );
 }
