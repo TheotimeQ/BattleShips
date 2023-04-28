@@ -125,17 +125,10 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
                 }
 
                 if(gameMap.shoots) {
-                    let shot = gameMap.shoots.find((s: any) => s.x == (j-1) && s.y == (i-1));
+                    let displayOwn = showOwnGrid || state != "running";
+                    let shot = gameMap.shoots.find((s: any) => s.x == (j-1) && s.y == (i-1) && s.on_us == displayOwn);
 
-                    if(shot && shot.on_us && (showOwnGrid || state != "running")) {
-                        if(shot.hit == "1") {
-                            style = `${style} ${styles.grid_cell_hit}`;
-                            content = '💥';
-                        } else {
-                            style = `${style} ${styles.grid_cell_miss}`;
-                            content = '✖';
-                        }
-                    } else if(shot && !shot.on_us && !showOwnGrid && state == "running") {
+                    if(shot) {
                         if(shot.hit == "1") {
                             style = `${style} ${styles.grid_cell_hit}`;
                             content = '💥';
