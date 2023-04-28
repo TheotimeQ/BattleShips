@@ -23,11 +23,12 @@ export default function GameBoard({ id, gameDetails } : { id: string, gameDetail
             if(response.success) {
                 console.log("ships placed");
             } else {
-                alert("Error placing ships: " + response.message);
-                setShips([]);
+                alert("Error placing ships: " + response.message);            
             }
         }).finally(() => {
             setSelectedShip(null);
+            setShips([]);
+            setUsedPositions([]);
         });
     }
 
@@ -108,6 +109,10 @@ export default function GameBoard({ id, gameDetails } : { id: string, gameDetail
                 } else {
                     clickEvent = () => onGridClick(j, i);
                 }
+
+                if(usedPositions.find((p: any) => p.x == j && p.y == i)) {
+                    style = `${style} ${styles.grid_cell_used}`
+                }
     
                 row.push(<div className={style} onClick={clickEvent}>{content}</div>);
             }
@@ -126,6 +131,7 @@ export default function GameBoard({ id, gameDetails } : { id: string, gameDetail
         <div className={styles.grid_container}>
             {currentGrid}
         </div>
+        {JSON.stringify(usedPositions)}
         { gameDetails.state == "ships_selection" && <BoatSelector gameDetails={gameDetails} placedShips={ships.map((s: any) => s.id)} onShipSelection={onShipSelection} onFinished={onFinished}></BoatSelector> }
     </div>);
 }

@@ -218,6 +218,10 @@
     gap: 10px;
 }
 
+.grid_cell_used {
+    background: #1ddffd;
+}
+
 @keyframes currentPlayer {
     0% {
         transform: scale(1);
