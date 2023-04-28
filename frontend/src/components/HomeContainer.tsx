@@ -23,6 +23,10 @@ export default function HomeContainer() {
     const [currentPlayer, setCurrentPlayer] = useState<string>("");
 
     const getCurrentPlayer = async () => {
+        if(!service.isLoggedIn()) {
+            return;
+        }
+
         service.getUser().then((response) => {
             if(response.success) {
                 setCurrentPlayer(response.username);
@@ -58,9 +62,10 @@ export default function HomeContainer() {
             }}/>
 
             <div className={styles.button_box}>
-                { !ingame && <HomeButton text="Créer une partie" onClick={matchmakingService.createGame} img="bataille"/>}
-                { !ingame && <HomeButton text="Matchmaking" onClick={matchmakingService.start} img="join"/>}
+                { !ingame && <HomeButton text="Partie privée" onClick={matchmakingService.createGame} img="bataille"/>}
+                { !ingame && <HomeButton text="Partie rapide" onClick={matchmakingService.start} img="join"/>}
                 { ingame && <HomeButton text="Reprendre la partie" onClick={matchmakingService.start} img="bataille"/>}
+                <HomeButton text="Classement" onClick={() => alert("Bientôt disponible")} img="leaderboard"/>
             </div>
             { currentPlayer && <div className={styles.player}>
                 <Image src="/images/player.png" alt="player" width={50} height={50} />
