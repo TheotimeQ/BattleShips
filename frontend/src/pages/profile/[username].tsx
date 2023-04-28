@@ -14,15 +14,15 @@ export default function Profile() {
 
     const [profile, setProfile] = useState<any>({});
 
-    /*const updateProfile = (username: string) => {
+    const updateProfile = (username: string) => {
         if(!service.isLoggedIn()) {
             router.push('/login');
             return;
         }
 
-        service.getProfile(username).then((game) => {
-            if(game.success) {
-                setProfile(game.data);
+        service.getProfile(username).then((result) => {
+            if(result.success) {
+                setProfile(result.data);
             } else {
                 router.push('/');
             }
@@ -34,14 +34,14 @@ export default function Profile() {
     useEffect(() => {
         if(!username) return;
         updateProfile(`${username}`);
-    }, [username]);*/
+    }, [username]);
 
     return (<div className={styles.main}>
         <div className={styles.icon}>
             <Image src="/images/player.png" alt="Pirate" width="100" height="100"/>
         </div>
         <div className={styles.user}>
-            <p className={styles.user_name}>User1</p>
+            <p className={styles.user_name}>{profile.username}</p>
         </div>
         <div className={styles.scores}>
             <div className={styles.score}>
@@ -62,18 +62,14 @@ export default function Profile() {
                 <p className={styles.history_cell} >ID Partie</p>
                 <p className={styles.history_cell}>Gagnant</p>
             </div>
-            <div className={styles.history_row}>
-                <p className={styles.history_cell}>001</p>
-                <p className={styles.history_cell}>002</p>
-            </div>
-            <div className={styles.history_row}>
-                <p className={styles.history_cell}>xxx</p>
-                <p className={styles.history_cell}>yyy</p>
-            </div>
-            <div className={styles.history_row}>
-                <p className={styles.history_cell}>ttt</p>
-                <p className={styles.history_cell}>uuu</p>
-            </div>
+            {
+                profile.games?.map((game: any) => {
+                    return <div className={styles.history_row}>
+                    <p className={styles.history_cell}>{game.id}</p>
+                    <p className={styles.history_cell}>{game.won ? "👑" : "💩"}</p>
+                </div>
+                })
+            }
         </div>
     </div>);
 }
