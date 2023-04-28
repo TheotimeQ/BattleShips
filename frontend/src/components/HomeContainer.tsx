@@ -1,90 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import Image from 'next/image';
 
 import styles from '@/styles/Home.module.css';
 
-import BattleshipService from '@/services/Battleship.service';
+import matchmakingService from '@/services/MatchMaking.service';
+
 import HomeButton from './buttons/HomeButton';
 import SearchBox from './buttons/SearchBox';
 import ErrorBox from './utils/ErrorBox';
 
-const service = new BattleshipService();
-
 export default function HomeContainer() {
 
-    const router = useRouter();
-    const loggedIn = service.isLoggedIn();
-    const [error, setError] = useState<string>("");
+    const {push} = useRouter();
+
     const [searching, setSearching] = useState<boolean>(false);
-    const searchingRef = useRef(false);
+    const [message, setMessage] = useState<string>("");
+    const [ingame, setInGame] = useState<boolean>(false);
 
-    const updateMatchmaking = async () => { 
+    useEffect(() => {
+        matchmakingService.initialize(setMessage, push);
 
-        if (!searchingRef.current) {
-            return ;
+        async function checkInGame() {
+            const currentlyInGame = await matchmakingService.isInGame();
+            setInGame(currentlyInGame);
         }
+        checkInGame()
+    }, []);
 
-        const response = await service.matchmakeUpdate();
-        if(response.success) {
-            stopMatchmaking();
-            router.push(`/game/${response.game_id}`);
-            return ;
-        } 
-        else {
-            if (response.message == "Waiting for opponent") {
-                setTimeout(() => {  updateMatchmaking(); }, 1000);
-            } else {
-                setError(response.message);
-                stopMatchmaking();
-            }
-        }
-    }
-
-    const stopMatchmaking = async() => {
-
-        const response = await service.matchmakeStop();
-        if(response.success) {
-            setSearching(false);
-            searchingRef.current = false;
-        } else {
-            setError(response.message);
-        }
-    }
-
-    const startMatchmaking = async () => {
-
-        if (!loggedIn) {
-            router.push('/login');searching
-            return;
-        }
-
-        const response = await service.matchmakeStart();
-        if(response.success) {
+    useEffect(() => {
+        if (message == "Waiting for opponent") {
             setSearching(true);
-            searchingRef.current = true;
-            updateMatchmaking();
         } else {
             setSearching(false);
-            setError(response.message);
         }
-    }
-
-    const createGame = async() => {
-
-        if (!loggedIn) {
-            router.push('/login');
-            return;
-        }
-        
-        const response = await service.createGame();   
-        if(response.success) {
-            router.push(`/game/${response.game}`);
-        } else {
-            setError(response.message);
-        }
-    }
+    }, [message]);
 
     return (
         <div className={styles.main} style={{ textAlign: 'center' }}>
@@ -93,11 +44,12 @@ export default function HomeContainer() {
             }}/>
 
             <div className={styles.button_box}>
-                <HomeButton text="Créer une partie" onClick={(createGame)} img="bataille"/>
-                <HomeButton text="Rejoindre une partie" onClick={(startMatchmaking)} img="join"/>
+                { !ingame && <HomeButton text="Créer une partie" onClick={matchmakingService.createGame} img="bataille"/>}
+                { !ingame && <HomeButton text="Matchmaking" onClick={matchmakingService.start} img="join"/>}
+                { ingame && <HomeButton text="Reprendre la partie" onClick={matchmakingService.start} img="bataille"/>}
             </div>
-            { searching && <SearchBox funct={(stopMatchmaking)} />}
-            { error != "" && <ErrorBox text={error}/>}
+            { searching && <SearchBox funct={(matchmakingService.stop)} />}
+            { message != "" && <ErrorBox text={message}/>}
         </div>
     );
 }

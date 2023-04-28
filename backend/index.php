@@ -62,5 +62,6 @@ Flight::route('POST /api/games/@id/shoot', function($id) { GameController::shoot
 Flight::route('GET /api/matchmaking/start', function() { MatchmakingController::start(); });
 Flight::route('GET /api/matchmaking/update', function() { MatchmakingController::update(); });
 Flight::route('GET /api/matchmaking/stop', function() { MatchmakingController::stop(); });
+Flight::route('GET /api/matchmaking/isingame', function() { MatchmakingController::isInGame(); });
 
 Flight::start();

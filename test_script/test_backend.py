@@ -110,6 +110,10 @@ class Client:
         response = get(f"{Url_base}/api/matchmaking/stop", cookies=self.Cookie, headers=self.Headers)
         print(response.status_code, response.json())
         
+    def IsInGame(self):
+        response = get(f"{Url_base}/api/matchmaking/isingame", cookies=self.Cookie, headers=self.Headers)
+        print(response.status_code, response.json())
+        
     def __str__(self):
         return f"Client: {self.username}, {self.password}, {self.token}"
     
@@ -127,20 +131,17 @@ Client_2.Register()
 Client_2.Login()
 print(Client_2)
 
-Client_1.GetUser()
-Client_1.GetUsers()
+# Client_1.GetUser()
+# Client_1.GetUsers()
 
 print("----------MatchMaking game----------")
 Client_1.MatchMakingStart()
-# Client_2.MatchMakingStart()
-
-Client_1.MatchMakingStart()
-# Client_2.MatchMakingStart()
+Client_2.MatchMakingStart()
 
 Client_1.MatchMakingUpdate()
+Client_2.MatchMakingUpdate()
 
-Client_1.MatchMakingStop()
-Client_1.MatchMakingStop()
+Client_1.IsInGame()
 
 # sleep(5)
 # Client_1

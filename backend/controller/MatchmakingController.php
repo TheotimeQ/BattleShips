@@ -50,7 +50,7 @@ class MatchmakingController {
             \Flight::json(array(
                 'success' => false,
                 'message' => $e->getMessage()
-            ), 400);
+            ), 200);
 
             return;
         }
@@ -70,6 +70,41 @@ class MatchmakingController {
         ));
     }
 
+    static function isInGame(){
+        $currentUser = \core\Auth::getUser(\core\Auth::getToken());
+        if (!$currentUser) {
+            \Flight::json(array(
+                'success' => false,
+                'message' => 'You are not logged in'
+            ), 400);
+
+            return;
+        }
+
+        try {
+            $is_in_game = \core\Match::isAlreadyInGame($currentUser['id']);
+        } catch (\Exception $e) {
+            \Flight::json(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ), 200);
+            return;
+        }
+
+        if ($is_in_game){
+            \Flight::json(array(
+                'success' => true,
+                'message' => 'You are already in game'
+            ), 200);
+        } else {
+            \Flight::json(array(
+                'success' => false,
+                'message' => 'You are not in game'
+            ), 200);
+        }
+        return;
+    }
+
     static function stop() {
 
         $currentUser = \core\Auth::getUser(\core\Auth::getToken());
@@ -81,15 +116,6 @@ class MatchmakingController {
 
             return;
         }
-
-        // if (!\core\Match::isUserMatchmaking($currentUser['id'])) {
-        //     \Flight::json(array(
-        //         'success' => false,
-        //         'message' => 'You are not looking for game'
-        //     ), 400);
-
-        //     return;
-        // }
 
         try {
             \core\Match::stop($currentUser['id']);
