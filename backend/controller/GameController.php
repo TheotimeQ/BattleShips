@@ -98,7 +98,7 @@ class GameController {
             return;
         }
 
-        $turn = $game["opponent"] == ($currentUser["id"] && $game["current"] == 1) || ($game["host"] == $currentUser["id"] && $game["current"] == 0);
+        $turn = ($game["opponent"] == $currentUser["id"] && $game["current"] == 1) || ($game["host"] == $currentUser["id"] && $game["current"] == 0);
 
         \Flight::json(array(
             'success' => true,

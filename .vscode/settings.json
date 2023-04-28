@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "db",
+            "database": "${workspaceFolder:inge-web-projet-le-crepier-3}/backend/db/battleship.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

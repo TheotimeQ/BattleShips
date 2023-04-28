@@ -235,6 +235,27 @@
     animation: notification 1s infinite;
 }
 
+.grid_cell_hit {
+    border: 3px solid #ff1f1f;
+}
+
+.grid_cell_miss {
+    background: #c5c5c5;
+}
+
+.grid_selected {
+    background: #ffffff;
+    border: 3px solid #FFC71F;
+    border-radius: 5px;
+}
+
+.grid_selected_button {
+    padding: 10px 20px;
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
 @keyframes currentPlayer {
     0% {
         transform: scale(1);

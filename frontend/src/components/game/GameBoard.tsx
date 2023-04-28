@@ -14,6 +14,7 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
     const [selectedShip, setSelectedShip] = useState<any>(null);
     const [usedPositions, setUsedPositions] = useState<any>([]);
     const [currentGrid, setCurrentGrid] = useState<any>([]);
+    const [showOwnGrid, setShowOwnGrid] = useState<boolean>(true);
 
     const onShipSelection = (ship: any) => {
         setSelectedShip(ship);
@@ -25,14 +26,19 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
 
         service.placeShips(id, ships).then((response) => {
             if(response.success) {
-                console.log("ships placed");
+                // TODO: show message placed ships
             } else {
-                alert("Error placing ships: " + response.message);            
+                if(response.message == "You have already placed your ships") {
+                    console.log("ships already placed, skipping");
+                } else {
+                    alert("Error placing ships: " + response.message);
+                    setShips([]);
+                    setUsedPositions([]);
+                }
             }
         }).finally(() => {
+            setFinished(true);
             setSelectedShip(null);
-            setShips([]);
-            setUsedPositions([]);
         });
     }
 
@@ -52,14 +58,15 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
         return true;
     }
 
-    const calculateShipPosition = (ship: any) => {
+    const calculateShipPosition = (ship: any) => {        
         let x = ship.x;
         let y = ship.y;
+        let direction = ship.direction;
 
         let positions = [];
 
-        for(let i = 0; i < ship.size; i++) {
-            if(ship.direction == 0) {
+        for(let i = 0; i < ship.size; i++) {            
+            if(direction == 0) {
                 positions.push({x: x + i, y: y});
             } else {
                 positions.push({x: x, y: y + i});
@@ -86,8 +93,11 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
 
             setUsedPositions([...usedPositions, ...positions]);
             setShips([...ships, ship]);
-
             setSelectedShip(null);
+        } else if(state == "running" && gameDetails.your_turn) {
+            service.shoot(id, x, y).then((response) => {
+                console.log(response);
+            });
         }
     }
 
@@ -114,7 +124,29 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
                     clickEvent = () => onGridClick(j - 1, i - 1);
                 }
 
-                if(usedPositions.find((p: any) => p.x == (j-1) && p.y == (i-1))) {
+                if(gameMap.shoots) {
+                    let shot = gameMap.shoots.find((s: any) => s.x == (j-1) && s.y == (i-1));
+
+                    if(shot && shot.on_us && (showOwnGrid || state != "running")) {
+                        if(shot.hit == "1") {
+                            style = `${style} ${styles.grid_cell_hit}`;
+                            content = '💥';
+                        } else {
+                            style = `${style} ${styles.grid_cell_miss}`;
+                            content = '✖';
+                        }
+                    } else if(shot && !shot.on_us && !showOwnGrid && state == "running") {
+                        if(shot.hit == "1") {
+                            style = `${style} ${styles.grid_cell_hit}`;
+                            content = '💥';
+                        } else {
+                            style = `${style} ${styles.grid_cell_miss}`;
+                            content = '✖';
+                        }
+                    }
+                }
+
+                if(usedPositions.find((p: any) => p.x == (j-1) && p.y == (i-1)) && (showOwnGrid || state != "running")) {
                     style = `${style} ${styles.grid_cell_used}`
                 }
     
@@ -129,20 +161,30 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
 
     useEffect(() => {
         setCurrentGrid(getGrid());
-    }, [ships, selectedShip, usedPositions]);
+    }, [ships, selectedShip, usedPositions, showOwnGrid]);
 
     useEffect(() => {
         if(!gameMap.ships) return;
         if(gameMap.ships.length == 5) {
             setFinished(true);
             setShips(gameMap.ships);
+            let usedPositionsTemp = [];
+
+            for(let ship of gameMap.ships) {
+                let positions = calculateShipPosition(ship);
+                usedPositionsTemp.push(...positions);
+            }
+
+            setUsedPositions(usedPositionsTemp);
         }
     }, [gameMap]);
 
     return (<div className={styles.centered_container}>
+        { gameDetails.state == "running" && <p className={styles.game_notification}>{showOwnGrid ? "Vous regardez votre grille" : "Vous regardez la grille de votre adversaire"}</p>}
         <div className={styles.grid_container}>
             {currentGrid}
         </div>
+        { gameDetails.state == "running" && <div className={styles.grid_selected}><button className={styles.grid_selected_button} onClick={() => setShowOwnGrid(!showOwnGrid)}>{showOwnGrid ? "Voir la grille de l'adversaire" : "Voir ma grille"}</button></div>}
         { gameDetails.state == "ships_selection" && finished && <p className={styles.game_notification}>Vos bateaux sont placés, attendez que votre adversaire finisse de placer les siens.</p>}
         { gameDetails.state == "ships_selection" && !finished && <BoatSelector gameDetails={gameDetails} placedShips={ships.map((s: any) => s.id)} onShipSelection={onShipSelection} onFinished={onFinished}></BoatSelector> }
     </div>);

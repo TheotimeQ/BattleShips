@@ -362,7 +362,7 @@ class Game {
 
         if (!$game) throw new \Exception('Game not found', 404);
 
-        $ships = $db->prepare('SELECT * FROM game_ships WHERE game = :game AND player = :player');
+        $ships = $db->prepare('SELECT game_ships.*, ships.size FROM game_ships, ships WHERE game = :game AND player = :player AND game_ships.ship = ships.id');
         $ships->execute(array(
             ':game' => $id,
             ':player' => $user_id
@@ -371,11 +371,12 @@ class Game {
 
         $user_ships = array_map(function($ship) {
             return array(
-                "id" => $ship["id"],
-                "x" => $ship["x"],
-                "y" => $ship["y"],
-                "direction" => $ship["direction"],
-                "down" => $ship["down"]
+                "id" => (int) $ship["id"],
+                "x" => (int) $ship["x"],
+                "y" => (int) $ship["y"],
+                "direction" => (int) $ship["direction"],
+                "down" => (boolean) $ship["down"],
+                "size" => (int) $ship["size"]
             );
         }, $user_ships);
 
@@ -397,9 +398,9 @@ class Game {
 
         $shoots = array_map(function($shoot) use ($user_id) {
             return array(
-                "x" => $shoot["x"],
-                "y" => $shoot["y"],
-                "hit" => $shoot["hit"],
+                "x" => (int) $shoot["x"],
+                "y" => (int) $shoot["y"],
+                "hit" => (boolean) $shoot["hit"],
                 "on_us" => ($shoot["player"] == $user_id)
             );
         }, $shoots);
