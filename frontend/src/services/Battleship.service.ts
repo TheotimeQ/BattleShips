@@ -204,6 +204,20 @@ class BattleshipService {
         return response.json();
     }
 
+    public async isingame(): Promise<any> {
+        if (!this.token) {
+            throw new Error('No token');
+        }
+
+        const response = await fetch('/api/matchmaking/isingame', {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+
+        return response.json();
+    }
+
     public async matchmakeUpdate(): Promise<any> {
         if (!this.token) {
             throw new Error('No token');

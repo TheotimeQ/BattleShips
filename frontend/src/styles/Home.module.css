@@ -101,17 +101,33 @@
     color: #000000;
     margin: 0;
     padding: 20px;
+    animation: notification 3s infinite;
 }
 
 .stop_button{
-    background-color: #ffffff;
-    border: solid black 1px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: rgb(212, 211, 211);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+    padding: 20px;
 }
 
 .stop_button:hover{
-    background-color: rgb(63, 86, 157);
-    border: solid black 1px;
+    background-color: rgb(252, 58, 87);
     transition-duration: 0.3s;
 }
 
-  
+@keyframes notification {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}  
