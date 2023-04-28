@@ -10,7 +10,7 @@
 Obstacle : Coordination entre les membre pour pas faire la meme chose en meme temps.
 Approfondissement : Rien pour le moment
 Prochaine seance : Continuer les Endpoints
-Assisante : non
+Assistance : non
 
 ## Séance 2
 
@@ -21,7 +21,7 @@ Assisante : non
 Obstacle : Aucun 
 Approfondissement : Rien pour le moment
 Prochaine seance : Tester tout les endoints , ameliorer les code d'erreurs 
-Assisante : non
+Assistance : non
 
 
 ## Séance 3
@@ -33,7 +33,7 @@ Assisante : non
 Obstacle : Aucun 
 Approfondissement : Rien pour le moment
 Prochaine seance : Mettre en place le front-end
-Assisante : non
+Assistance : non
 
 
 ## Séance 4
@@ -43,7 +43,7 @@ Assisante : non
 Obstacle : Debut de react, decouverte des concept pas forcement evident
 Approfondissement : React from scratch ? Npm ? 
 Prochaine seance : Continuer le front-end - ajouter un system de page de pup / de popup / de fenettre de pub sur le coté
-Assisante : non
+Assistance : non
 
 ## Séance 5
 
@@ -66,6 +66,26 @@ Or, mes collègues étaient déjà entrain d'implémenter cette fonctionnalité.
 Obstacle : Compréhension de l'implémentation des méthodes GET et POST 
 Approfondissement : les boss => drag and drop // Les + lents => NONE
 Prochaine seance : Les + lents => Finir le formulaire pour l'historique et le classement 
-Assisante : Probablement 
+Assistance : non 
 
+## Scéance 6
 
+Les boss du dev :
+
+- Finalisation du placement des bateaux
+- Tirs sur la grille de l'adversaire et affichage des tirs
+- Résolution de bugs
+- Matchmaking fonctionnel
+- Page d'accueil retravaillée
+- Retour à la partie en cours après une déconnexion
+
+Les + lents :
+
+- Finalisation de la page de profil (historique et score)
+- Design de la page de profil
+- Récupération des informations du profil (GET /api/profile/{username})
+
+Obstacle : Calcul des scores
+Approfondissement : les boss => Retravailler le GameBoard // Les + lents => Retravailler le GameBoard
+Prochaine seance : Les + lents => Retravailler le GameBoard
+Assistance : non

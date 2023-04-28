@@ -76,7 +76,7 @@ export default function GameBoard({ id, gameDetails, gameMap } : { id: string, g
         return positions;
     }
 
-    const onGridClick = (x: number, y: number) => {        
+    const onGridClick = (x: number, y: number) => {
         if(state == "ships_selection") {
             if(selectedShip == null) return;
             
