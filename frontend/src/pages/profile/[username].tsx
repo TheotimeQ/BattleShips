@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import styles from '@/styles/Profile.module.css';
 
@@ -35,31 +36,44 @@ export default function Profile() {
         updateProfile(`${username}`);
     }, [username]);*/
 
-    return (
-
-        <div className={styles.main}>
-            <ul className={styles.table_all}>
-                <li className={styles.column_name}>
-                    <div className={styles.column1_name}>Username</div>
-                    <div className={styles.column2_name}>Nombre de parties jouées</div>
-                    <div className={styles.column3_name}>Nombre de parties gagnées</div>
-                </li>
-                <li className={styles.values_first_column}>
-                    <div>42235</div>
-                    <div>John Doe</div>
-                    <div>$350</div>
-                </li>
-                <li className={styles.values_second_column}>
-                    <div>42442</div>
-                    <div>Jennifer Smith</div>
-                    <div>$220</div>
-            </li>
-                <li className={styles.values_third_column}>
-                    <div>42257</div>
-                    <div>John Smith</div>
-                    <div>$341</div>
-                </li>
-            </ul>
-      </div>
-    );
+    return (<div className={styles.main}>
+        <div className={styles.icon}>
+            <Image src="/images/player.png" alt="Pirate" width="100" height="100"/>
+        </div>
+        <div className={styles.user}>
+            <p className={styles.user_name}>User1</p>
+        </div>
+        <div className={styles.scores}>
+            <div className={styles.score}>
+                <p className={styles.score_number} >16</p>
+                <p className={styles.score_details}>Gagnées</p>
+            </div>
+            <div className={styles.score}>
+                <p className={styles.score_number} >16</p>
+                <p className={styles.score_details}>Perdues</p>
+            </div>
+            <div className={styles.score}>
+                <p className={styles.score_number} >16</p>
+                <p className={styles.score_details}>Jouées</p>
+            </div>
+        </div>
+        <div className={styles.history_table}>
+            <div className={`${styles.history_row} ${styles.row_names}`}>
+                <p className={styles.history_cell} >ID Partie</p>
+                <p className={styles.history_cell}>Gagnant</p>
+            </div>
+            <div className={styles.history_row}>
+                <p className={styles.history_cell}>001</p>
+                <p className={styles.history_cell}>002</p>
+            </div>
+            <div className={styles.history_row}>
+                <p className={styles.history_cell}>xxx</p>
+                <p className={styles.history_cell}>yyy</p>
+            </div>
+            <div className={styles.history_row}>
+                <p className={styles.history_cell}>ttt</p>
+                <p className={styles.history_cell}>uuu</p>
+            </div>
+        </div>
+    </div>);
 }
