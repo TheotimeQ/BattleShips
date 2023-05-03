@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import {Adsense} from '@ctrl/react-adsense';
 
 import Image from 'next/image';
 
@@ -75,15 +74,6 @@ export default function HomeContainer() {
             </div>}
             { searching && <SearchBox funct={(matchmakingService.stop)} />}
             { message != "" && <ErrorBox text={message}/> }
-
-            <Adsense
-                client="ca-pub-4238647462189874"
-                slot="7259870550"
-                style={{ display: 'block' }}
-                layout="in-article"
-                format="fluid"
-            />
-
         </div>
     );
 }

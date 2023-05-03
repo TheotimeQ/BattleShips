@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import {Adsense} from '@ctrl/react-adsense';
 
 import HomeContainer from '@/components/HomeContainer';
 
@@ -25,6 +26,19 @@ export default function Home() {
       <main className={styles.main} style={{ textAlign: 'center' }}>
         <HomeContainer />
       </main>
+
+      <Adsense
+        client="ca-pub-7640562161899788"
+        slot="7259870550"
+      />
+
+      <Adsense
+        client="ca-pub-4238647462189874"
+        slot="7259870550"
+        style={{ display: 'block' }}
+        layout="in-article"
+        format="fluid"
+      />
     </>
   );
 }
