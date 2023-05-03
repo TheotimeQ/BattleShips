@@ -20,8 +20,9 @@ class MatchControl {
 
     static function isAlreadyInGame($user_id) {
         $db = \Flight::db();
+        
         try {
-            $user = $db->prepare("SELECT * FROM games WHERE host = :user_id OR opponent = :user_id");
+            $user = $db->prepare("SELECT * FROM games WHERE host = :user_id OR opponent = :user_id AND state != 'ended'");
             $user->execute(array(':user_id' => $user_id));
             $user = $user->fetchAll();
             if (sizeof($user) > 0)
