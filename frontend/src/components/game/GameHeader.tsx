@@ -45,7 +45,7 @@ function GameHeaderSelection({ gameDetails } : { gameDetails: any }) {
 
 function GameHeaderRunning({ gameDetails } : { gameDetails: any }) {
     return (<div>
-        <h1 className={styles.game_title}>{gameDetails.your_turn ? "A votre tour de jouer !" : "En attente de l'adversaire..."}</h1>
+        <h1 className={styles.game_title}>{gameDetails.your_turn ? "À votre tour de jouer !" : "En attente de l'adversaire..."}</h1>
         <p className={styles.game_subtitle}>{gameDetails.your_turn ? "Cliquez sur la grille pour choisir ou vous souhaitez tirer." : "Attendez que votre adversaire tire pour jouer."}</p>
         <div className={styles.game_players}>
             <div className={`${styles.game_player} ${gameDetails.your_turn ? styles.player_current : ""}`}>

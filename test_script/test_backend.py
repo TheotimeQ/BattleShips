@@ -61,7 +61,7 @@ class Client:
         if (response.status_code == 200):
             self.token = response.json()["token"]
             self.Cookie = {'token': self.token}
-            self.Headers = headers = {"Authorization": "Bearer " + self.token}
+            self.Headers = {"Authorization": "Bearer " + self.token}
 
     def CreateGame(self):
         response = post(f"{Url_base}/api/games/create", cookies=self.Cookie, headers=self.Headers)
