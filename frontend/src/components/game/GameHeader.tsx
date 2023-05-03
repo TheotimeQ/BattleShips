@@ -11,6 +11,8 @@ export default function GameHeader({ gameDetails } : { gameDetails: any }) {
         return GameHeaderSelection({ gameDetails });
     } else if (state == "running") {
         return GameHeaderRunning({ gameDetails });
+    } else if (state == "ended") {
+        return GameHeaderFinished({ gameDetails });
     }
 
     return (<p>état inconnu</p>);
@@ -36,7 +38,7 @@ function GameHeaderSelection({ gameDetails } : { gameDetails: any }) {
             </div>
 
             <div className={`${styles.game_player} ${!gameDetails.your_turn ? styles.player_current : ""}`}>
-                <p className={styles.game_player_name}>Ennemi</p>
+                <p className={styles.game_player_name}>{gameDetails.ennemy}</p>
                 <Image src="/images/player.png" alt="Pirate" width="50" height="50"/>
             </div>
         </div>
@@ -55,9 +57,16 @@ function GameHeaderRunning({ gameDetails } : { gameDetails: any }) {
             </div>
 
             <div className={`${styles.game_player} ${!gameDetails.your_turn ? styles.player_current : ""}`}>
-                <p className={styles.game_player_name}>Ennemi</p>
+                <p className={styles.game_player_name}>{gameDetails.ennemy}</p>
                 <Image src="/images/player.png" alt="Pirate" width="50" height="50"/>
             </div>
         </div>
+    </div>);         
+}
+
+function GameHeaderFinished({ gameDetails } : { gameDetails: any }) {
+    return (<div>
+        <h1 className={styles.game_title}>👑 {gameDetails.winner} à remporté la partie 👑</h1>
+        <p className={styles.game_subtitle}>La flotte de son ennemi n'a pu résister à son talent sans égal.</p>
     </div>);         
 }

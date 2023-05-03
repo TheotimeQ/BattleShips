@@ -98,13 +98,23 @@ class GameController {
             return;
         }
 
+        $ennemy = $game["host"] == $currentUser["id"] ? $game["opponent"] : $game["host"];
         $turn = ($game["opponent"] == $currentUser["id"] && $game["current"] == 1) || ($game["host"] == $currentUser["id"] && $game["current"] == 0);
+
+        $ennemyUser = \core\Auth::getUserById($ennemy);
+        $winnerUser = false;
+
+        if($game["winner"]) {
+            $winnerUser = \core\Auth::getUserById($game["winner"]);
+        }
 
         \Flight::json(array(
             'success' => true,
             'data' => array(
                 'state' => $game["state"],
-                'your_turn' => $turn
+                'winner' => $winnerUser ? $winnerUser["username"] : false,
+                'your_turn' => $turn,
+                'ennemy' => $ennemyUser["username"]
             )
         ));
     }

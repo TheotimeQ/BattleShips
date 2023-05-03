@@ -190,10 +190,13 @@ class Game {
                         $db->prepare('UPDATE game_ships SET down = 1 WHERE id = :id')
                             ->execute(array(':id' => $ship['id']));
 
-                        if(self::isGameEnded($game)) {
-                            $db->prepare('UPDATE games SET state = :state WHERE id = :id')
+                        $winner = self::isGameEnded($game);
+
+                        if($winner) {
+                            $db->prepare('UPDATE games SET state = :state, winner = :winner WHERE id = :id')
                                 ->execute(array(
                                     ':state' => 'ended',
+                                    ':winner' => $winner,
                                     ':id' => $game
                                 ));
                         }
@@ -337,7 +340,7 @@ class Game {
         }, $ships));
 
         if (count($players) < 2) {
-            return true;
+            return $players[0];
         }
 
         return false;

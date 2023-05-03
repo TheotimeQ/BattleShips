@@ -86,6 +86,14 @@ class Auth {
         return $stmt->fetch();
     }
 
+    public static function getUserById($id) {
+        $db = \Flight::db();
+
+        $stmt = $db->prepare('SELECT * FROM users WHERE id = :id');
+        $stmt->execute(array(':id' => $id));
+        return $stmt->fetch();
+    }
+
     public static function getToken() {
         $headers = apache_request_headers();
         if (!isset($headers['authorization'])) return false;

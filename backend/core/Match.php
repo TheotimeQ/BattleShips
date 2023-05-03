@@ -20,9 +20,9 @@ class MatchControl {
 
     static function isAlreadyInGame($user_id) {
         $db = \Flight::db();
-        
+
         try {
-            $user = $db->prepare("SELECT * FROM games WHERE host = :user_id OR opponent = :user_id AND state != 'ended'");
+            $user = $db->prepare("SELECT * FROM games WHERE (host = :user_id OR opponent = :user_id) AND state != 'ended'");
             $user->execute(array(':user_id' => $user_id));
             $user = $user->fetchAll();
             if (sizeof($user) > 0)
@@ -72,12 +72,13 @@ class MatchControl {
             ':last_seen' => time() - 10
         ));
         
-        $game = $db->prepare('SELECT * FROM games WHERE host = :user_id OR opponent = :oponent_id');
+        $game = $db->prepare("SELECT * FROM games WHERE (host = :user_id OR opponent = :opponent_id) AND state != 'ended'");
         $game->execute(array(
             ':user_id' => $user_id,
-            ':oponent_id' => $user_id
+            ':opponent_id' => $user_id
         ));
         $game = $game->fetch();
+
         if ($game)
         {
             $user_match = $db->prepare('DELETE FROM matchmaking WHERE user_id = :user_id');
