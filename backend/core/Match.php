@@ -1,7 +1,7 @@
 <?php
 namespace core;
 
-class Match {
+class MatchControl {
 
     static function isUserMatchMaking($user_id) {
         $db = \Flight::db();

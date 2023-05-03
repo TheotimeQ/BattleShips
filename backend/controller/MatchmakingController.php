@@ -16,7 +16,7 @@ class MatchmakingController {
         }
 
         try {
-            \core\Match::start($currentUser['id']);
+            \core\MatchControl::start($currentUser['id']);
         } catch (\Exception $e) {
             \Flight::json(array(
                 'success' => false,
@@ -45,7 +45,7 @@ class MatchmakingController {
         }
 
         try {
-            $game_id = \core\Match::update($currentUser['id']);
+            $game_id = \core\MatchControl::update($currentUser['id']);
         } catch (\Exception $e) {
             \Flight::json(array(
                 'success' => false,
@@ -82,7 +82,7 @@ class MatchmakingController {
         }
 
         try {
-            $is_in_game = \core\Match::isAlreadyInGame($currentUser['id']);
+            $is_in_game = \core\MatchControl::isAlreadyInGame($currentUser['id']);
         } catch (\Exception $e) {
             \Flight::json(array(
                 'success' => false,
@@ -118,7 +118,7 @@ class MatchmakingController {
         }
 
         try {
-            \core\Match::stop($currentUser['id']);
+            \core\MatchControl::stop($currentUser['id']);
         } catch (\Exception $e) {
             \Flight::json(array(
                 'success' => false,
