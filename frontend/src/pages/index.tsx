@@ -20,31 +20,21 @@ export default function Home() {
           content="width=device-width, initial-scale=1"
         />
         <link rel="icon" href="/favicon.ico" />
-        <Script
-          id="Adsense-id"
-          data-ad-client="ca-pub-4238647462189874"
-          async={true}
-          strategy="beforeInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-        />
       </Head>
 
       <main className={styles.main} style={{ textAlign: 'center' }}>
         <HomeContainer />
+
+        <div className="text-center adsbygoogle my-3">
+          <Adsense
+            client="ca-pub-4238647462189874"
+            slot="2052129219"
+            style={{ display: 'block' }}
+            layout="in-article"
+            format="auto"
+          />
+        </div>
       </main>
-
-      <Adsense
-        client="ca-pub-4238647462189874"
-        slot="7259870550"
-      />
-
-      <Adsense
-        client="ca-pub-4238647462189874"
-        slot="7259870550"
-        style={{ display: 'block' }}
-        layout="in-article"
-        format="fluid"
-      />
     </>
   );
 }
