@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const config = require('./config.json');
+
 const nextConfig = {
   reactStrictMode: true,
   distDir: 'build',
@@ -6,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://127.0.0.1:8080/api/:path*',
+        destination: config.api_url
       },
     ]
   }
