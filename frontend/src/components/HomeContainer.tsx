@@ -12,6 +12,7 @@ import HomeButton from './buttons/HomeButton';
 import SearchBox from './buttons/SearchBox';
 import ErrorBox from './utils/ErrorBox';
 
+import {AdUnit} from "@eisberg-labs/next-google-adsense";
 
 const service = new BattleshipService();
 
@@ -74,6 +75,14 @@ export default function HomeContainer() {
             </div>}
             { searching && <SearchBox funct={(matchmakingService.stop)} />}
             { message != "" && <ErrorBox text={message}/> }
+
+            <AdUnit
+                id="adunit-1"
+                data-ad-client="ca-pub-4238647462189874"
+                data-ad-slot="2052129219"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+            />
         </div>
     );
 }
