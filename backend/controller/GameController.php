@@ -101,8 +101,12 @@ class GameController {
         $ennemy = $game["host"] == $currentUser["id"] ? $game["opponent"] : $game["host"];
         $turn = ($game["opponent"] == $currentUser["id"] && $game["current"] == 1) || ($game["host"] == $currentUser["id"] && $game["current"] == 0);
 
-        $ennemyUser = \core\Auth::getUserById($ennemy);
+        $ennemyUser = false;
         $winnerUser = false;
+
+        if($ennemy) {
+            $ennemyUser = \core\Auth::getUserById($ennemy);
+        }
 
         if($game["winner"]) {
             $winnerUser = \core\Auth::getUserById($game["winner"]);
@@ -114,7 +118,7 @@ class GameController {
                 'state' => $game["state"],
                 'winner' => $winnerUser ? $winnerUser["username"] : false,
                 'your_turn' => $turn,
-                'ennemy' => $ennemyUser["username"]
+                'ennemy' => $ennemyUser ? $ennemyUser["username"] : false,
             )
         ));
     }
