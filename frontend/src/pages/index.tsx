@@ -20,7 +20,13 @@ export default function Home() {
           content="width=device-width, initial-scale=1"
         />
         <link rel="icon" href="/favicon.ico" />
-        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4238647462189874"></Script>
+        <Script
+          id="Adsense-id"
+          data-ad-client="ca-pub-4238647462189874"
+          async={true}
+          strategy="beforeInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        />
       </Head>
 
       <main className={styles.main} style={{ textAlign: 'center' }}>
@@ -28,7 +34,7 @@ export default function Home() {
       </main>
 
       <Adsense
-        client="ca-pub-7640562161899788"
+        client="ca-pub-4238647462189874"
         slot="7259870550"
       />
 
